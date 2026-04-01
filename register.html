@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Monsoon CME — SPICK PICU</title>
+  <meta name="description"
+    content="Register for the Monsoon CME of Pediatric Intensive Care 2026. Workshops and conference at The Park, Kolkata.">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>Registration</h1>
+      <div class="divider"></div>
+      <p>Secure your spot at Monsoon CME 2026</p>
+    </div>
+  </section>
+
+  <!-- Pricing Overview -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <h2>Registration Fees</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="grid-3" style="max-width: 900px; margin: 0 auto;">
+        <div class="card card-premium animate-on-scroll" style="text-align: center; padding: 2rem;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔬</div>
+          <h4>Workshop Only</h4>
+          <div
+            style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-accent); margin: 0.75rem 0;">
+            ₹3,000</div>
+          <p class="text-muted" style="font-size: 0.88rem;">Pre-conference workshop<br>12th July 2026</p>
+        </div>
+        <div class="card card-premium animate-on-scroll"
+          style="text-align: center; padding: 2rem; border-color: var(--color-accent); position: relative;">
+          <!-- <div style="position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--color-accent); color: var(--color-primary-dark); padding: 0.25rem 1rem; border-radius: 0 0 8px 8px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;">RECOMMENDED</div> -->
+          <div style="font-size: 2rem; margin-bottom: 0.5rem; margin-top: 0.5rem;">🏆</div>
+          <h4>Workshop + Conference</h4>
+          <div
+            style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-accent); margin: 0.75rem 0;">
+            ₹3,500</div>
+          <p class="text-muted" style="font-size: 0.88rem;">Workshop + full conference<br>12th–13th July 2026</p>
+        </div>
+        <div class="card card-premium animate-on-scroll" style="text-align: center; padding: 2rem;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">👩‍⚕️</div>
+          <h4>Nurse Training</h4>
+          <div
+            style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-accent); margin: 0.75rem 0;">
+            ₹1,500</div>
+          <p class="text-muted" style="font-size: 0.88rem;">Nursing critical care workshop<br>12th July 2026</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Registration Form -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <h2>Registration Form</h2>
+        <div class="divider"></div>
+        <p>Fill in your details below to register</p>
+      </div>
+
+      <div style="max-width: 750px; margin: 0 auto;">
+        <form id="registration-form" class="animate-on-scroll" novalidate>
+
+          <!-- Personal Details -->
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">Personal Details</h3>
+
+            <div class="form-row">
+              <div class="form-group" data-required>
+                <label for="first-name">First Name <span class="required">*</span></label>
+                <input type="text" id="first-name" class="form-control" placeholder="Enter first name" required>
+                <div class="form-error">First name is required</div>
+              </div>
+              <div class="form-group" data-required>
+                <label for="last-name">Last Name <span class="required">*</span></label>
+                <input type="text" id="last-name" class="form-control" placeholder="Enter last name" required>
+                <div class="form-error">Last name is required</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group" data-required>
+                <label for="email">Email <span class="required">*</span></label>
+                <input type="email" id="email" class="form-control" placeholder="your@email.com" required>
+                <div class="form-error">Valid email is required</div>
+              </div>
+              <div class="form-group" data-required>
+                <label for="phone">Phone Number <span class="required">*</span></label>
+                <input type="tel" id="phone" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+                <div class="form-error">Valid phone number is required</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group" data-required>
+                <label for="affiliation">Affiliation / Institution <span class="required">*</span></label>
+                <input type="text" id="affiliation" class="form-control" placeholder="Hospital / Institution name"
+                  required>
+                <div class="form-error">Affiliation is required</div>
+              </div>
+              <div class="form-group" data-required>
+                <label for="designation">Designation <span class="required">*</span></label>
+                <input type="text" id="designation" class="form-control" placeholder="Your designation" required>
+                <div class="form-error">Designation is required</div>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group" data-required>
+              <label for="password">Create Password <span class="required">*</span></label>
+              <div class="password-wrapper">
+                <input type="password" id="password" class="form-control"
+                  placeholder="Create a password for your account" required minlength="6">
+                <button type="button" class="password-toggle" aria-label="Toggle password visibility">👁️</button>
+              </div>
+              <div class="form-error">Password is required (min 6 characters)</div>
+              <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.25rem;">
+                You'll use this to log in later for document submission.
+              </p>
+            </div>
+          </div>
+
+          <!-- Registration Type -->
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">Registration Type</h3>
+
+            <div class="form-row">
+              <div class="form-group" data-required>
+                <label for="role">I am a <span class="required">*</span></label>
+                <select id="role" class="form-control" required>
+                  <option value="">— Select your role —</option>
+                  <option value="Pediatrician">Pediatrician</option>
+                  <option value="ICU Trainee">ICU Trainee</option>
+                  <option value="Intensivist">Intensivist</option>
+                  <option value="Post Graduate Trainee">Post Graduate Trainee</option>
+                  <option value="Nurse">Nurse</option>
+                  <option value="Faculty">Faculty</option>
+                </select>
+                <div class="form-error">Please select your role</div>
+              </div>
+
+              <div class="form-group" data-required>
+                <label for="attending">I am attending <span class="required">*</span></label>
+                <select id="attending" class="form-control" required>
+                  <option value="">— Select attendance type —</option>
+                  <option value="Workshop Only">Workshop Only — ₹3,000</option>
+                  <option value="Workshop + Conference">Workshop + Conference — ₹3,500</option>
+                  <option value="Nurse Training">Nurse Training — ₹1,500</option>
+                </select>
+                <div class="form-error">Please select attendance type</div>
+              </div>
+            </div>
+
+            <!-- Workshop Dropdown (shown conditionally) -->
+            <div class="form-group" id="workshop-group" style="display: none;" data-required>
+              <label for="workshop">Workshop Name <span class="required">*</span></label>
+              <select id="workshop" class="form-control">
+                <option value="">— Select workshop —</option>
+                <option value="NIV Workshop">NIV Workshop</option>
+                <option value="Basic Ventilation Workshop">Basic Ventilation Workshop</option>
+                <option value="POCUS Workshop">POCUS Workshop</option>
+                <option value="Cardiac Hemodynamics & ECMO Masterclass">Cardiac Hemodynamics &amp; ECMO Masterclass
+                </option>
+              </select>
+              <div class="form-error">Please select a workshop</div>
+            </div>
+
+            <div class="form-group" data-required>
+              <label for="food">Food Preference <span class="required">*</span></label>
+              <select id="food" class="form-control" required>
+                <option value="">— Select food preference —</option>
+                <option value="Veg">Veg</option>
+                <option value="Non-veg">Non-veg</option>
+              </select>
+              <div class="form-error">Please select food preference</div>
+            </div>
+          </div>
+
+          <!-- Dynamic Price Display -->
+          <div class="price-display" id="price-section" style="display: none;">
+            <div class="price-label">Amount Payable</div>
+            <div class="price-amount" id="price-amount">₹0</div>
+            <div class="price-type" id="price-type"></div>
+          </div>
+
+          <!-- Payment Section -->
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">Payment</h3>
+
+            <div class="qr-section">
+              <h4>Scan to Pay</h4>
+              <p>Scan the QR code below using any UPI app to make your payment</p>
+              <!-- Replace with your actual QR code image -->
+              <img src="qr-code.png" alt="Payment QR Code" style="border: 2px solid var(--color-border);">
+              <p style="margin-top: 0.75rem; font-weight: 600; color: var(--color-primary);">
+                After payment, upload a screenshot below
+              </p>
+            </div>
+
+            <div class="form-group" style="margin-top: 1.5rem;">
+              <label>Payment Screenshot <span class="required">*</span></label>
+              <div class="file-upload">
+                <input type="file" id="payment-screenshot" accept="image/*" required>
+                <div class="upload-icon">📎</div>
+                <div class="upload-text">Click or drag to upload payment screenshot</div>
+                <div class="file-name" id="file-name"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div style="text-align: center;">
+            <button type="submit" id="submit-btn" class="btn btn-primary btn-lg" style="min-width: 250px;">
+              Submit Registration
+            </button>
+            <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 0.75rem;">
+              A confirmation email will be sent to your registered email address.
+            </p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize registration form logic from script.js
+      if (typeof initRegistrationForm === 'function') {
+        initRegistrationForm();
+      } else {
+        // Retry after script.js loads
+        setTimeout(function () {
+          if (typeof initRegistrationForm === 'function') initRegistrationForm();
+        }, 500);
+      }
+    });
+  </script>
+</body>
+
+</html>
