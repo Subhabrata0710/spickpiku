@@ -4,8 +4,8 @@
 // ============================================================
 
 // --- CONFIGURATION ---
-const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID';          // Replace with your Google Sheet ID
-const UPLOAD_FOLDER_ID = 'YOUR_DRIVE_FOLDER_ID';  // Replace with your Google Drive folder ID
+const SHEET_ID = '1Q6NSbdPZ5x1x2qf_7e-XKWBQCtBSeyyVwVcIe-CYABM';          // Replace with your Google Sheet ID
+const UPLOAD_FOLDER_ID = '1wXPnzyOCzJkTU513unWBkztg9jXfTB_I';  // Replace with your Google Drive folder ID
 
 // Email Placeholders — Replace with actual emails
 const EMAIL_FROM_NAME = 'SPICK PICU - Monsoon CME 2025';  // Display name for outgoing emails
