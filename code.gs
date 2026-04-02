@@ -8,9 +8,9 @@ const SHEET_ID = '1Q6NSbdPZ5x1x2qf_7e-XKWBQCtBSeyyVwVcIe-CYABM';          // Rep
 const UPLOAD_FOLDER_ID = '1wXPnzyOCzJkTU513unWBkztg9jXfTB_I';  // Replace with your Google Drive folder ID
 
 // Email Placeholders — Replace with actual emails
-const EMAIL_FROM_NAME = 'SPICK PICU - Monsoon CME 2025';  // Display name for outgoing emails
-const EMAIL_CC = 'placeholder-cc@example.com';             // CC recipient(s), comma-separated
-const EMAIL_BCC = 'placeholder-bcc@example.com';           // BCC recipient(s), comma-separated
+const EMAIL_FROM_NAME = 'SPICK PICU - Monsoon CME 2026';  // Display name for outgoing emails
+const EMAIL_CC = 'mrohit724@gmail.com';             // CC recipient(s), comma-separated
+//const EMAIL_BCC = 'placeholder-bcc@example.com';           // BCC recipient(s), comma-separated
 
 // ============================================================
 // HANDLE INCOMING REQUESTS
@@ -189,11 +189,11 @@ function registerUser(data) {
 // SEND CONFIRMATION EMAIL
 // ============================================================
 function sendConfirmationEmail(data, serialNumber) {
-  const subject = 'Registration Confirmation — Monsoon CME of Pediatric Intensive Care 2025 [' + serialNumber + ']';
+  const subject = 'Registration Confirmation — Monsoon CME of Pediatric Intensive Care 2026 [' + serialNumber + ']';
 
   const body =
     'Dear ' + data.firstName + ' ' + data.lastName + ',\n\n' +
-    'Thank you for registering for the Monsoon CME of Pediatric Intensive Care 2025.\n\n' +
+    'Thank you for registering for the Monsoon CME of Pediatric Intensive Care 2026.\n\n' +
     'Your registration details are as follows:\n' +
     '─────────────────────────────────\n' +
     'Registration ID : ' + serialNumber + '\n' +
@@ -209,23 +209,31 @@ function sendConfirmationEmail(data, serialNumber) {
     '─────────────────────────────────\n\n' +
     'Please keep this email for your records. You can log in with your registered email and password to submit documents later.\n\n' +
     'Event Details:\n' +
-    'Workshops : 12th July 2025 (Saturday)\n' +
-    'Conference: 13th July 2025 (Sunday)\n' +
+    'Workshops : 12th July 2026 (Saturday)\n' +
+    'Conference: 13th July 2026 (Sunday)\n' +
     'Venue     : The Park, Kolkata\n\n' +
     'We look forward to welcoming you!\n\n' +
     'Best regards,\n' +
     'Organizing Committee\n' +
-    'Monsoon CME of Pediatric Intensive Care 2025\n' +
+    'Monsoon CME of Pediatric Intensive Care 2026\n' +
     'Society of Pediatric Intensive Care, Kolkata (SPICK)';
 
-  MailApp.sendEmail({
+  const emailOptions = {
     to: data.email,
-    cc: EMAIL_CC,
-    bcc: EMAIL_BCC,
     name: EMAIL_FROM_NAME,
     subject: subject,
     body: body
-  });
+  };
+
+  // Only add CC/BCC if they are configured (not placeholders and not empty)
+  if (EMAIL_CC && !EMAIL_CC.includes('placeholder')) {
+    emailOptions.cc = EMAIL_CC;
+  }
+  if (EMAIL_BCC && !EMAIL_BCC.includes('placeholder')) {
+    emailOptions.bcc = EMAIL_BCC;
+  }
+
+  MailApp.sendEmail(emailOptions);
 }
 
 // ============================================================
