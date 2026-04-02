@@ -8,7 +8,7 @@
 
   // ---- Configuration ----
   const CONFIG = {
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw-Ql3jC47_qXvjRRMKRqh5qM3MItwOZd6QOy4tOTMzocdbrSN7ZwNeiAAHnOxaUCoW4g/exec', // Replace with your deployed Apps Script URL
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwIfH21EviW8rq-6FOBWZb9lfG2FMWm04UYx9GJXR3EaCuGqkzMTSnJhqxvSLJRPw-TGw/exec', // Replace with your deployed Apps Script URL
     ANIMATION_THRESHOLD: 0.15,
     TOAST_DURATION: 4000,
     LOADER_DELAY: 600
