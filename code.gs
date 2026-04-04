@@ -198,14 +198,14 @@ function sendConfirmationEmail(data, serialNumber) {
     'Your registration details are as follows:\n' +
     '─────────────────────────────────\n' +
     'Registration ID : ' + serialNumber + '\n' +
-    'Name            : ' + data.firstName + ' ' + data.lastName + '\n' +
-    'Email           : ' + data.email + '\n' +
-    'Phone           : ' + data.phone + '\n' +
-    'Affiliation     : ' + data.affiliation + '\n' +
-    'Role            : ' + data.role + '\n' +
+    //'Name            : ' + data.firstName + ' ' + data.lastName + '\n' +
+    //'Email           : ' + data.email + '\n' +
+    //'Phone           : ' + data.phone + '\n' +
+    //'Affiliation     : ' + data.affiliation + '\n' +
+    //'Role            : ' + data.role + '\n' +
     'Attending       : ' + data.attendingType + '\n' +
     (data.workshopName ? 'Workshop        : ' + data.workshopName + '\n' : '') +
-    'Food Preference : ' + data.foodPreference + '\n' +
+    //'Food Preference : ' + data.foodPreference + '\n' +
     'Amount Paid     : ₹' + data.amount + '\n' +
     '─────────────────────────────────\n\n' +
     'Please keep this email for your records.\n\n' +
