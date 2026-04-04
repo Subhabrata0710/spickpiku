@@ -9,7 +9,7 @@ const UPLOAD_FOLDER_ID = '1wXPnzyOCzJkTU513unWBkztg9jXfTB_I';  // Replace with y
 
 // Email Placeholders — Replace with actual emails
 const EMAIL_FROM_NAME = 'SPICK PICU - Monsoon CME 2026';  // Display name for outgoing emails
-const EMAIL_CC = 'mrohit724@gmail.com';             // CC recipient(s), comma-separated
+const EMAIL_CC = 'mukherjeerohit301@gmail.com';             // CC recipient(s), comma-separated
 //const EMAIL_BCC = 'placeholder-bcc@example.com';           // BCC recipient(s), comma-separated
 
 // ============================================================
@@ -194,20 +194,21 @@ function sendConfirmationEmail(data, serialNumber) {
   const body =
     'Dear ' + data.firstName + ' ' + data.lastName + ',\n\n' +
     'Thank you for registering for the Monsoon CME of Pediatric Intensive Care 2026.\n\n' +
+    'We have received your registration and has been shared with the organising committee. Once verified you will receive a confirmation text on your whatsapp.\n\n' +
     'Your registration details are as follows:\n' +
     '─────────────────────────────────\n' +
     'Registration ID : ' + serialNumber + '\n' +
-    'Name            : ' + data.firstName + ' ' + data.lastName + '\n' +
-    'Email           : ' + data.email + '\n' +
-    'Phone           : ' + data.phone + '\n' +
-    'Affiliation     : ' + data.affiliation + '\n' +
-    'Role            : ' + data.role + '\n' +
+    //'Name            : ' + data.firstName + ' ' + data.lastName + '\n' +
+    //'Email           : ' + data.email + '\n' +
+    //'Phone           : ' + data.phone + '\n' +
+    //'Affiliation     : ' + data.affiliation + '\n' +
+    //'Role            : ' + data.role + '\n' +
     'Attending       : ' + data.attendingType + '\n' +
     (data.workshopName ? 'Workshop        : ' + data.workshopName + '\n' : '') +
-    'Food Preference : ' + data.foodPreference + '\n' +
-    'Amount Paid     : ₹' + data.amount + '\n' +
+    //'Food Preference : ' + data.foodPreference + '\n' +
+    //'Amount Paid     : ₹' + data.amount + '\n' +
     '─────────────────────────────────\n\n' +
-    'Please keep this email for your records. You can log in with your registered email and password to submit documents later.\n\n' +
+    'Please keep this email for your records.\n\n' +
     'Event Details:\n' +
     'Workshops : 12th July 2026 (Saturday)\n' +
     'Conference: 13th July 2026 (Sunday)\n' +
