@@ -37,7 +37,7 @@
           <div
             style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-accent); margin: 0.75rem 0;">
             ₹3,000</div>
-          <p class="text-muted" style="font-size: 0.88rem;">Pre-conference workshop<br>12th July 2026</p>
+          <p class="text-muted" style="font-size: 0.88rem;">Pre-conference workshop<br>13th June 2026</p>
         </div>
         <div class="card card-premium animate-on-scroll"
           style="text-align: center; padding: 2rem; border-color: var(--color-accent); position: relative;">
@@ -47,15 +47,15 @@
           <div
             style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-accent); margin: 0.75rem 0;">
             ₹3,500</div>
-          <p class="text-muted" style="font-size: 0.88rem;">Workshop + full conference<br>12th–13th July 2026</p>
+          <p class="text-muted" style="font-size: 0.88rem;">Workshop + full conference<br>13th–14th June 2026</p>
         </div>
         <div class="card card-premium animate-on-scroll" style="text-align: center; padding: 2rem;">
           <div style="font-size: 2rem; margin-bottom: 0.5rem;">👩‍⚕️</div>
-          <h4>Nurse Training</h4>
+          <h4>Nursing Workshop</h4>
           <div
             style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-accent); margin: 0.75rem 0;">
             ₹1,500</div>
-          <p class="text-muted" style="font-size: 0.88rem;">Nursing critical care workshop<br>12th July 2026</p>
+          <p class="text-muted" style="font-size: 0.88rem;">Nursing critical care workshop<br>13th June 2026</p>
         </div>
       </div>
     </div>
@@ -127,7 +127,7 @@
               </div>
               <div class="form-error">Password is required (min 6 characters)</div>
               <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.25rem;">
-                You'll use this to log in later for document submission.
+                You'll use this to log in later for abstract submission.
               </p>
             </div>
           </div>
@@ -144,7 +144,7 @@
                   <option value="Pediatrician">Pediatrician</option>
                   <option value="ICU Trainee">ICU Trainee</option>
                   <option value="Intensivist">Intensivist</option>
-                  <option value="Post Graduate Trainee">Post Graduate Trainee</option>
+                  <option value="Post Graduate Trainee">Post Graduate Trainee (PGT)</option>
                   <option value="Nurse">Nurse</option>
                   <option value="Faculty">Faculty</option>
                 </select>
@@ -155,9 +155,10 @@
                 <label for="attending">I am attending <span class="required">*</span></label>
                 <select id="attending" class="form-control" required>
                   <option value="">— Select attendance type —</option>
-                  <option value="Workshop Only">Workshop Only — ₹3,000</option>
-                  <option value="Workshop + Conference">Workshop + Conference — ₹3,500</option>
-                  <option value="Nurse Training">Nurse Training — ₹1,500</option>
+                  <option value="Workshop Only">Workshop Only</option>
+                  <option value="Workshop + Conference">Workshop + Conference</option>
+                  <option value="Only Conference">Only Conference</option>
+                  <option value="Nursing Workshop">Nursing Workshop (₹1,500)</option>
                 </select>
                 <div class="form-error">Please select attendance type</div>
               </div>
@@ -168,11 +169,11 @@
               <label for="workshop">Workshop Name <span class="required">*</span></label>
               <select id="workshop" class="form-control">
                 <option value="">— Select workshop —</option>
-                <option value="NIV Workshop">NIV Workshop</option>
-                <option value="Basic Ventilation Workshop">Basic Ventilation Workshop</option>
-                <option value="POCUS Workshop">POCUS Workshop</option>
-                <option value="Cardiac Hemodynamics & ECMO Masterclass">Cardiac Hemodynamics &amp; ECMO Masterclass
-                </option>
+                <option value="Nursing Workshop">Nursing Workshop (Medical College / AIIMS Kalyani)</option>
+                <option value="Ventilation Workshop">Ventilation Workshop (Manipal / Apollo)</option>
+                <option value="Pediatric Simulation Workshop">Pediatric Simulation Workshop (IPGMER / SSKM)</option>
+                <option value="Emergencies in Office Practice">Emergencies in Office Practice (ICH)</option>
+                <option value="Procedures in PICU">Procedures in PICU (Neotia)</option>
               </select>
               <div class="form-error">Please select a workshop</div>
             </div>

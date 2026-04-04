@@ -8,7 +8,7 @@
 
   // ---- Configuration ----
   const CONFIG = {
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyBccA8WgK9CpqfHjwc6HyQhaXnjWtkXMGTDeaITWbJwdGJ7KhKo0utcSLHGjs3pYBnBQ/exec', // Replace with your deployed Apps Script URL
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxqB7wPENQHx5nRuGJhWC1CAELW8uOxOv6Ak1oXdtXqJ0igQdwe35nP35pLC49M7lTqSg/exec', // Replace with your deployed Apps Script URL
     ANIMATION_THRESHOLD: 0.15,
     TOAST_DURATION: 4000,
     LOADER_DELAY: 600
@@ -264,32 +264,46 @@
     // All attending options
     const allOptions = attendingSelect.querySelectorAll('option');
 
-    // Pricing map
+    // Pricing map (Category -> Role -> Amount)
     const pricing = {
-      'Workshop Only': { amount: 3000, label: 'Workshop Only' },
-      'Workshop + Conference': { amount: 3500, label: 'Workshop + Conference' },
-      'Nurse Training': { amount: 1500, label: 'Nurse Training' }
+      'Workshop Only': {
+        'PGT': 3000,
+        'Pediatrician': 3500
+      },
+      'Workshop + Conference': {
+        'PGT': 3500,
+        'Pediatrician': 4000
+      },
+      'Only Conference': {
+        'PGT': 1500,
+        'Pediatrician': 2500
+      },
+      'Nursing Workshop': {
+        'Nurse': 1500
+      }
     };
 
     // Role change handler — Nurse lock logic
     roleSelect.addEventListener('change', function () {
       const isNurse = this.value === 'Nurse';
+      const isPGT = this.value === 'Post Graduate Trainee';
 
       allOptions.forEach(opt => {
         if (opt.value === '') return; // Skip placeholder
         if (isNurse) {
-          opt.disabled = opt.value !== 'Nurse Training';
-          opt.style.display = opt.value !== 'Nurse Training' ? 'none' : '';
+          opt.disabled = opt.value !== 'Nursing Workshop';
+          opt.style.display = opt.value !== 'Nursing Workshop' ? 'none' : '';
         } else {
-          opt.disabled = opt.value === 'Nurse Training';
-          opt.style.display = opt.value === 'Nurse Training' ? 'none' : '';
+          opt.disabled = opt.value === 'Nursing Workshop';
+          opt.style.display = opt.value === 'Nursing Workshop' ? 'none' : '';
         }
       });
 
       // Auto-select
       if (isNurse) {
-        attendingSelect.value = 'Nurse Training';
-      } else if (attendingSelect.value === 'Nurse Training') {
+        attendingSelect.value = 'Nursing Workshop';
+        if (workshopSelect) workshopSelect.value = 'Nursing Workshop';
+      } else if (attendingSelect.value === 'Nursing Workshop') {
         attendingSelect.value = '';
       }
 
@@ -304,10 +318,27 @@
     });
 
     function updatePrice() {
-      const selected = attendingSelect.value;
-      if (pricing[selected]) {
-        priceDisplay.textContent = '₹' + pricing[selected].amount.toLocaleString('en-IN');
-        priceType.textContent = pricing[selected].label;
+      const attending = attendingSelect.value;
+      const role = roleSelect.value;
+
+      if (!attending || !role) {
+        priceSection.style.display = 'none';
+        return;
+      }
+
+      // Determine price category (Pediatrician vs PGT)
+      let priceCategory = 'Pediatrician';
+      if (role === 'Post Graduate Trainee') {
+        priceCategory = 'PGT';
+      } else if (role === 'Nurse') {
+        priceCategory = 'Nurse';
+      }
+
+      const amount = pricing[attending] ? pricing[attending][priceCategory] : null;
+
+      if (amount !== null) {
+        priceDisplay.textContent = '₹' + amount.toLocaleString('en-IN');
+        priceType.textContent = attending + ' (' + role + ')';
         priceSection.style.display = 'block';
       } else {
         priceSection.style.display = 'none';
@@ -318,9 +349,13 @@
       const workshopGroup = document.getElementById('workshop-group');
       if (!workshopGroup) return;
       const val = attendingSelect.value;
-      // Show workshop dropdown only for Workshop Only or Workshop + Conference
-      if (val === 'Workshop Only' || val === 'Workshop + Conference') {
+      // Show workshop dropdown for any selection involving workshops
+      if (val === 'Workshop Only' || val === 'Workshop + Conference' || val === 'Nursing Workshop') {
         workshopGroup.style.display = 'block';
+        // Auto-select "Nursing Workshop" for nurses
+        if (val === 'Nursing Workshop' && workshopSelect) {
+          workshopSelect.value = 'Nursing Workshop';
+        }
       } else {
         workshopGroup.style.display = 'none';
         if (workshopSelect) workshopSelect.value = '';
@@ -392,7 +427,7 @@
             attendingType: attendingSelect.value,
             workshopName: workshopSelect ? workshopSelect.value : '',
             foodPreference: document.getElementById('food').value,
-            amount: pricing[attendingSelect.value]?.amount || 0,
+            amount: parseInt(priceDisplay.textContent.replace(/[^\d]/g, '')) || 0,
             paymentScreenshot: {
               base64: base64,
               mimeType: file.type,

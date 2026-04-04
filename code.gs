@@ -117,7 +117,7 @@ function registerUser(data) {
     let prefix = 'W';
     if (data.attendingType === 'Workshop + Conference') {
       prefix = 'WC';
-    } else if (data.attendingType === 'Nurse Training') {
+    } else if (data.attendingType === 'Nursing Workshop') {
       prefix = 'N';
     }
 
@@ -198,20 +198,20 @@ function sendConfirmationEmail(data, serialNumber) {
     'Your registration details are as follows:\n' +
     '─────────────────────────────────\n' +
     'Registration ID : ' + serialNumber + '\n' +
-    //'Name            : ' + data.firstName + ' ' + data.lastName + '\n' +
-    //'Email           : ' + data.email + '\n' +
-    //'Phone           : ' + data.phone + '\n' +
-    //'Affiliation     : ' + data.affiliation + '\n' +
-    //'Role            : ' + data.role + '\n' +
+    'Name            : ' + data.firstName + ' ' + data.lastName + '\n' +
+    'Email           : ' + data.email + '\n' +
+    'Phone           : ' + data.phone + '\n' +
+    'Affiliation     : ' + data.affiliation + '\n' +
+    'Role            : ' + data.role + '\n' +
     'Attending       : ' + data.attendingType + '\n' +
     (data.workshopName ? 'Workshop        : ' + data.workshopName + '\n' : '') +
-    //'Food Preference : ' + data.foodPreference + '\n' +
-    //'Amount Paid     : ₹' + data.amount + '\n' +
+    'Food Preference : ' + data.foodPreference + '\n' +
+    'Amount Paid     : ₹' + data.amount + '\n' +
     '─────────────────────────────────\n\n' +
     'Please keep this email for your records.\n\n' +
     'Event Details:\n' +
-    'Workshops : 12th July 2026 (Saturday)\n' +
-    'Conference: 13th July 2026 (Sunday)\n' +
+    'Workshops : 13th June 2026 (Saturday)\n' +
+    'Conference: 14th June 2026 (Sunday)\n' +
     'Venue     : The Park, Kolkata\n\n' +
     'We look forward to welcoming you!\n\n' +
     'Best regards,\n' +
@@ -227,10 +227,10 @@ function sendConfirmationEmail(data, serialNumber) {
   };
 
   // Only add CC/BCC if they are configured (not placeholders and not empty)
-  if (EMAIL_CC && !EMAIL_CC.includes('placeholder')) {
+  if (typeof EMAIL_CC !== 'undefined' && EMAIL_CC && !EMAIL_CC.includes('placeholder')) {
     emailOptions.cc = EMAIL_CC;
   }
-  if (EMAIL_BCC && !EMAIL_BCC.includes('placeholder')) {
+  if (typeof EMAIL_BCC !== 'undefined' && EMAIL_BCC && !EMAIL_BCC.includes('placeholder')) {
     emailOptions.bcc = EMAIL_BCC;
   }
 
