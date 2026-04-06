@@ -29,6 +29,10 @@ function doPost(e) {
       response = registerUser(data);
     } else if (action === 'login') {
       response = loginUser(data);
+    } else if (action === 'uploadAbstract') {
+      response = uploadAbstract(data);
+    } else if (action === 'getMyFiles') {
+      response = getMyFiles(data);
     } else {
       response = { success: false, message: 'Unknown action: ' + action };
     }
@@ -265,4 +269,102 @@ function loginUser(data) {
   }
 
   return { success: false, message: 'Invalid email or password.' };
+}
+
+// ============================================================
+// UPLOAD ABSTRACT (for dashboard)
+// ============================================================
+function uploadAbstract(data) {
+  if (!data || !data.email || !data.file) {
+    return { success: false, message: 'Email and file are required.' };
+  }
+
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(30000);
+
+    // Upload file to Google Drive
+    const folder = DriveApp.getFolderById(UPLOAD_FOLDER_ID);
+    const fileName = 'Abstract_' + new Date().getTime() + '_' + data.file.fileName;
+    const blob = Utilities.newBlob(
+      Utilities.base64Decode(data.file.base64),
+      data.file.mimeType,
+      fileName
+    );
+    const file = folder.createFile(blob);
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+
+    const fileId = file.getId();
+    const fileUrl = file.getUrl();
+
+    // Log to Abstracts sheet
+    const sheet = getAbstractsSheet();
+    sheet.appendRow([
+      fileId,
+      data.email,
+      data.file.fileName,
+      fileUrl,
+      new Date()
+    ]);
+
+    return {
+      success: true,
+      message: 'Abstract uploaded successfully!',
+      fileUrl: fileUrl
+    };
+
+  } catch (e) {
+    console.log('Error in uploadAbstract: ' + e.toString());
+    return { success: false, message: 'Upload failed: ' + e.toString() };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// ============================================================
+// GET MY FILES (for dashboard)
+// ============================================================
+function getMyFiles(data) {
+  if (!data || !data.email) {
+    return { success: false, message: 'Email is required.' };
+  }
+
+  try {
+    const sheet = getAbstractsSheet();
+    const allData = sheet.getDataRange().getValues();
+    const files = [];
+
+    for (let i = 1; i < allData.length; i++) {
+      // UserID (email) is column B (index 1)
+      if (allData[i][1] === data.email) {
+        files.push({
+          fileId: allData[i][0],
+          fileName: allData[i][2],
+          fileUrl: allData[i][3],
+          uploadDate: Utilities.formatDate(new Date(allData[i][4]), 'Asia/Kolkata', 'dd MMM yyyy, hh:mm a')
+        });
+      }
+    }
+
+    return { success: true, files: files };
+
+  } catch (e) {
+    console.log('Error in getMyFiles: ' + e.toString());
+    return { success: false, message: 'Could not load files: ' + e.toString() };
+  }
+}
+
+// ============================================================
+// HELPER — Get or Create Abstracts Sheet
+// ============================================================
+function getAbstractsSheet() {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  let sheet = ss.getSheetByName('Abstracts');
+  if (!sheet) {
+    sheet = ss.insertSheet('Abstracts');
+    sheet.appendRow(['FileID', 'UserID', 'FileName', 'FileUrl', 'UploadDate']);
+    sheet.setFrozenRows(1);
+    console.log('Created new Abstracts sheet');
+  }
+  return sheet;
 }

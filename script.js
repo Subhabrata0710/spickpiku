@@ -8,7 +8,7 @@
 
   // ---- Configuration ----
   const CONFIG = {
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwqXffC7i_AQ2NngsGyTrmfJZ_nYu_IAwUq28K9uDhELtWxtesnCFnSAUks0AOcPYaC1g/exec', // Replace with your deployed Apps Script URL
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbylWQBeozpe4-siOgKvI2jjHR9w0Rf41NxequyJZTk1JNINTdTpPjPPCFmO7I7dXrR93w/exec', // Replace with your deployed Apps Script URL
     ANIMATION_THRESHOLD: 0.15,
     TOAST_DURATION: 4000,
     LOADER_DELAY: 600
@@ -286,25 +286,38 @@
     // Role change handler — Nurse lock logic
     roleSelect.addEventListener('change', function () {
       const isNurse = this.value === 'Nurse';
-      const isPGT = this.value === 'Post Graduate Trainee';
 
+      // Lock Attending type for Nurse
       allOptions.forEach(opt => {
-        if (opt.value === '') return; // Skip placeholder
+        if (opt.value === '') return;
         if (isNurse) {
+          // If nurse, only allow Nursing Workshop
           opt.disabled = opt.value !== 'Nursing Workshop';
           opt.style.display = opt.value !== 'Nursing Workshop' ? 'none' : '';
         } else {
+          // If not nurse, hide Nursing Workshop
           opt.disabled = opt.value === 'Nursing Workshop';
           opt.style.display = opt.value === 'Nursing Workshop' ? 'none' : '';
         }
       });
 
-      // Auto-select
+      // Auto-select and lock
       if (isNurse) {
         attendingSelect.value = 'Nursing Workshop';
-        if (workshopSelect) workshopSelect.value = 'Nursing Workshop';
-      } else if (attendingSelect.value === 'Nursing Workshop') {
-        attendingSelect.value = '';
+        attendingSelect.disabled = true; // They can't change it
+        if (workshopSelect) {
+            workshopSelect.value = 'Nursing Workshop';
+            workshopSelect.disabled = true; // Lock workshop too
+        }
+      } else {
+        attendingSelect.disabled = false;
+        if (attendingSelect.value === 'Nursing Workshop') {
+          attendingSelect.value = '';
+        }
+        if (workshopSelect) {
+            workshopSelect.disabled = false;
+            if (workshopSelect.value === 'Nursing Workshop') workshopSelect.value = '';
+        }
       }
 
       updatePrice();
@@ -313,6 +326,16 @@
 
     // Attending change handler
     attendingSelect.addEventListener('change', function () {
+      if (this.value === 'Nursing Workshop') {
+          roleSelect.value = 'Nurse';
+          this.disabled = true;
+          if (workshopSelect) {
+              workshopSelect.value = 'Nursing Workshop';
+              workshopSelect.disabled = true;
+          }
+          // Re-trigger role change logic for consistency
+          roleSelect.dispatchEvent(new Event('change'));
+      }
       updatePrice();
       updateWorkshopVisibility();
     });
@@ -349,16 +372,37 @@
       const workshopGroup = document.getElementById('workshop-group');
       if (!workshopGroup) return;
       const val = attendingSelect.value;
+      const isNurse = roleSelect.value === 'Nurse';
+
       // Show workshop dropdown for any selection involving workshops
       if (val === 'Workshop Only' || val === 'Workshop + Conference' || val === 'Nursing Workshop') {
         workshopGroup.style.display = 'block';
-        // Auto-select "Nursing Workshop" for nurses
-        if (val === 'Nursing Workshop' && workshopSelect) {
-          workshopSelect.value = 'Nursing Workshop';
+        
+        // Hide/Show Nursing Workshop option in the workshop list
+        if (workshopSelect) {
+          const workshopOptions = workshopSelect.querySelectorAll('option');
+          workshopOptions.forEach(opt => {
+            if (opt.value === 'Nursing Workshop') {
+              opt.style.display = isNurse ? '' : 'none';
+              opt.disabled = !isNurse;
+            } else if (opt.value !== '') {
+              // Non-nursing workshops
+              opt.style.display = isNurse ? 'none' : '';
+              opt.disabled = isNurse;
+            }
+          });
+          
+          if (isNurse) {
+            workshopSelect.value = 'Nursing Workshop';
+            workshopSelect.disabled = true;
+          }
         }
       } else {
         workshopGroup.style.display = 'none';
-        if (workshopSelect) workshopSelect.value = '';
+        if (workshopSelect) {
+          workshopSelect.value = '';
+          workshopSelect.disabled = false;
+        }
       }
     }
 

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Monsoon CME — SPICK PICU</title>
+  <meta name="description" content="Delegate dashboard — Monsoon CME of Pediatric Intensive Care 2026.">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <!-- Page Banner -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Delegate Dashboard</h1>
+      <div class="divider"></div>
+      <p id="user-welcome">Welcome Back</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Dashboard Stats -->
+      <div class="dashboard-stats animate-on-scroll">
+        <div class="stat-card">
+          <div class="stat-icon">👤</div>
+          <div class="stat-content">
+            <h3 id="user-name">Loading...</h3>
+            <p id="user-type">Delegate</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📧</div>
+          <div class="stat-content">
+            <h3 id="user-email">Loading...</h3>
+            <p>Email Address</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-content">
+            <h3>13–14 June 2026</h3>
+            <p>Conference Dates</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🏨</div>
+          <div class="stat-content">
+            <h3>The Park</h3>
+            <p>Venue, Kolkata</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Dashboard Grid -->
+      <div class="dashboard-grid">
+
+        <!-- File Upload Section -->
+        <div class="dashboard-card animate-on-scroll">
+          <div class="card-header-dash">
+            <h3>📤 Upload Abstract</h3>
+            <p>Upload your research papers, abstracts, or presentations</p>
+          </div>
+
+          <div class="upload-area" id="upload-area">
+            <div class="upload-icon">📁</div>
+            <p><strong>Click to upload</strong> or drag and drop</p>
+            <p class="text-muted">PDF, DOC, PPT, Images (Max 10MB)</p>
+            <input type="file" id="file-upload" class="file-input"
+              accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png">
+          </div>
+
+          <p id="upload-status" class="upload-status"></p>
+
+          <button class="btn btn-primary" style="width:100%; margin-top: 1rem;" onclick="uploadAbstract()" id="upload-btn">
+            Upload File
+          </button>
+        </div>
+
+        <!-- Registration Details -->
+        <div class="dashboard-card animate-on-scroll">
+          <div class="card-header-dash">
+            <h3>✅ Registration Details</h3>
+            <p>Your conference registration information</p>
+          </div>
+
+          <div class="info-list">
+            <div class="info-item">
+              <span class="info-label">Registration ID:</span>
+              <span class="info-value" id="reg-id">Loading...</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Registration Type:</span>
+              <span class="info-value" id="reg-type">—</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Payment Status:</span>
+              <span class="badge badge-success">Confirmed</span>
+            </div>
+          </div>
+
+          <button class="btn btn-outline" style="width:100%; margin-top: 1.5rem;" onclick="logout()">
+            🔓 Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Your Files Section -->
+      <div class="dashboard-card animate-on-scroll" style="margin-top: 2rem;">
+        <div class="card-header-dash">
+          <h3>📂 Your Uploaded Files</h3>
+          <p>Manage your abstracts and presentations</p>
+        </div>
+
+        <div id="file-list" class="file-list">
+          <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <p>No files uploaded yet</p>
+            <p class="text-muted">Upload your first abstract above</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conference Info Cards -->
+      <div class="dashboard-grid animate-on-scroll" style="margin-top: 2rem;">
+        <div class="info-card-dash">
+          <div class="info-card-icon">📅</div>
+          <h4>Scientific Program</h4>
+          <p>View the complete conference schedule and sessions</p>
+          <a href="index.html" class="btn btn-outline" style="margin-top: 1rem;">View Program</a>
+        </div>
+        <div class="info-card-dash">
+          <div class="info-card-icon">🏨</div>
+          <h4>Venue Details</h4>
+          <p>Information about The Park, Kolkata</p>
+          <a href="venue.html" class="btn btn-outline" style="margin-top: 1rem;">View Venue</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+  <script src="script.js"></script>
+  <script>
+    // ---- Auth Guard ----
+    document.addEventListener('DOMContentLoaded', function () {
+      const session = localStorage.getItem('spick_session');
+      if (!session) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const user = JSON.parse(session);
+      document.getElementById('user-name').textContent = user.name || 'Delegate';
+      document.getElementById('user-email').textContent = user.email || '';
+      document.getElementById('user-welcome').textContent = 'Welcome, ' + (user.name || 'Delegate');
+      document.getElementById('user-type').textContent = user.role || 'Delegate';
+      document.getElementById('reg-id').textContent = user.serialNumber || '—';
+      document.getElementById('reg-type').textContent = user.attendingType || '—';
+
+      loadMyFiles();
+    });
+
+    // ---- File Upload: Drag & Drop + Click ----
+    const uploadArea = document.getElementById('upload-area');
+    const fileInput = document.getElementById('file-upload');
+
+    if (uploadArea && fileInput) {
+      uploadArea.addEventListener('click', () => fileInput.click());
+
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = 'var(--color-accent)';
+        uploadArea.style.backgroundColor = 'rgba(201,169,110,0.05)';
+      });
+
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.borderColor = 'var(--color-border)';
+        uploadArea.style.backgroundColor = 'transparent';
+      });
+
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = 'var(--color-border)';
+        uploadArea.style.backgroundColor = 'transparent';
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          fileInput.files = files;
+          document.getElementById('upload-status').innerHTML =
+            '<span style="color: var(--color-accent);">✓ ' + files[0].name + ' selected</span>';
+        }
+      });
+
+      fileInput.addEventListener('change', function () {
+        if (this.files.length > 0) {
+          document.getElementById('upload-status').innerHTML =
+            '<span style="color: var(--color-accent);">✓ ' + this.files[0].name + ' selected</span>';
+        }
+      });
+    }
+
+    // ---- Upload Abstract ----
+    async function uploadAbstract() {
+      const file = fileInput.files[0];
+      if (!file) {
+        showToast('Please select a file to upload.', 'error');
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        showToast('File size must be under 10MB.', 'error');
+        return;
+      }
+
+      const session = JSON.parse(localStorage.getItem('spick_session'));
+      if (!session || !session.email) {
+        showToast('Session expired. Please login again.', 'error');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const btn = document.getElementById('upload-btn');
+      btn.disabled = true;
+      btn.textContent = 'Uploading...';
+
+      try {
+        const base64 = await fileToBase64(file);
+
+        const response = await fetch(window.SPICK_CONFIG.APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({
+            action: 'uploadAbstract',
+            email: session.email,
+            file: {
+              base64: base64,
+              mimeType: file.type,
+              fileName: file.name
+            }
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showToast(result.message || 'File uploaded successfully!', 'success');
+          fileInput.value = '';
+          document.getElementById('upload-status').innerHTML = '';
+          loadMyFiles();
+        } else {
+          showToast(result.message || 'Upload failed.', 'error');
+        }
+      } catch (err) {
+        console.error('Upload error:', err);
+        showToast('Network error. Please try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Upload File';
+      }
+    }
+
+    // ---- File to Base64 ----
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // ---- Load My Files ----
+    async function loadMyFiles() {
+      const session = JSON.parse(localStorage.getItem('spick_session'));
+      if (!session || !session.email) return;
+
+      const fileList = document.getElementById('file-list');
+
+      try {
+        const response = await fetch(window.SPICK_CONFIG.APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ action: 'getMyFiles', email: session.email })
+        });
+
+        const result = await response.json();
+
+        if (result.success && result.files && result.files.length > 0) {
+          fileList.innerHTML = result.files.map(f =>
+            '<div class="file-item">' +
+              '<div class="file-info">' +
+                '<span class="file-icon">📄</span>' +
+                '<div>' +
+                  '<strong>' + f.fileName + '</strong>' +
+                  '<p class="text-muted" style="font-size:0.82rem;">' + f.uploadDate + '</p>' +
+                '</div>' +
+              '</div>' +
+              '<a href="' + f.fileUrl + '" target="_blank" class="btn btn-outline" style="padding:0.4rem 1rem; font-size:0.85rem;">View</a>' +
+            '</div>'
+          ).join('');
+        } else {
+          fileList.innerHTML =
+            '<div class="empty-state">' +
+              '<div class="empty-icon">📭</div>' +
+              '<p>No files uploaded yet</p>' +
+              '<p class="text-muted">Upload your first abstract above</p>' +
+            '</div>';
+        }
+      } catch (err) {
+        console.error('Error loading files:', err);
+      }
+    }
+
+    // ---- Logout ----
+    function logout() {
+      localStorage.removeItem('spick_session');
+      showToast('Logged out successfully.', 'success');
+      setTimeout(() => { window.location.href = 'login.html'; }, 500);
+    }
+  </script>
+</body>
+
+</html>
