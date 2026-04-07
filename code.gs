@@ -146,11 +146,41 @@ function registerUser(data) {
       }
     }
 
+    // --- Generate QR Code, Save to 'QR' Folder, Get URL ---
+    const qrText = 'Monsoon CME 2026\n' +
+                   'Reg ID: ' + serialNumber + '\n' +
+                   'Name: ' + (data.firstName || '') + ' ' + (data.lastName || '') + '\n' +
+                   'Role: ' + (data.role || '') + '\n' +
+                   'Attending: ' + (data.attendingType || '');
+    const qrApiUrl = 'https://quickchart.io/qr?text=' + encodeURIComponent(qrText) + '&margin=2&size=300';
+    let savedQrUrl = qrApiUrl; // Default to API URL if Drive save fails
+    let globalQrBlob = null;
+    
+    try {
+      const response = UrlFetchApp.fetch(qrApiUrl);
+      globalQrBlob = response.getBlob().getAs(MimeType.PNG).setName('Registration_QR_' + serialNumber + '.png');
+      
+      const parentFolder = DriveApp.getFolderById(UPLOAD_FOLDER_ID);
+      const qrFolders = parentFolder.getFoldersByName('QR');
+      let qrFolder;
+      if (qrFolders.hasNext()) {
+        qrFolder = qrFolders.next();
+      } else {
+        qrFolder = parentFolder.createFolder('QR');
+      }
+      
+      const qrFile = qrFolder.createFile(globalQrBlob);
+      qrFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      savedQrUrl = qrFile.getUrl(); // Permanent Drive URL
+    } catch (qrError) {
+      console.log('Failed to save QR code to Drive: ' + qrError.toString());
+    }
+
     // --- Append to Sheet ---
     // Columns: Serial No | First Name | Last Name | Email | Phone |
     //          Affiliation | Designation | Password | Role |
     //          Attending Type | Workshop Name | Food Preference |
-    //          Amount | Payment Screenshot URL | Timestamp
+    //          Amount | Payment Screenshot URL | QR Code URL | Timestamp
     sheet.appendRow([
       serialNumber,
       data.firstName || '',
@@ -166,12 +196,13 @@ function registerUser(data) {
       data.foodPreference || '',
       data.amount || 0,
       screenshotUrl,
+      savedQrUrl,
       new Date()
     ]);
 
     // --- Send Confirmation Email ---
     try {
-      sendConfirmationEmail(data, serialNumber);
+      sendConfirmationEmail(data, serialNumber, savedQrUrl, globalQrBlob);
     } catch (emailError) {
       console.log('Email failed but registration saved: ' + emailError.toString());
     }
@@ -192,13 +223,25 @@ function registerUser(data) {
 // ============================================================
 // SEND CONFIRMATION EMAIL
 // ============================================================
-function sendConfirmationEmail(data, serialNumber) {
+function sendConfirmationEmail(data, serialNumber, savedQrUrl, qrBlob) {
   const subject = 'Registration Confirmation — Monsoon CME of Pediatric Intensive Care 2026 [' + serialNumber + ']';
+  let inlineBlob = null;
+  let attachBlob = null;
+  let finalQrPic = false;
+  if (qrBlob) {
+    try {
+      inlineBlob = qrBlob.copyBlob().setName('qrCode.png');
+      attachBlob = qrBlob.copyBlob().setName('Registration_QR_' + serialNumber + '.png');
+      finalQrPic = true;
+    } catch (err) {
+      console.log('Failed to copy QR Code blob: ' + err.toString());
+    }
+  }
 
-  const body =
+  const plainBody =
     'Dear ' + data.firstName + ' ' + data.lastName + ',\n\n' +
     'Thank you for registering for the Monsoon CME of Pediatric Intensive Care 2026.\n\n' +
-    'We have received your registration and has been shared with the organising committee. Once verified you will receive a confirmation text on your whatsapp.\n\n' +
+    'We have received your registration and it has been shared with the organising committee. Once verified you will receive a confirmation text on your whatsapp.\n\n' +
     'Your registration details are as follows:\n' +
     '─────────────────────────────────\n' +
     'Registration ID : ' + serialNumber + '\n' +
@@ -212,7 +255,8 @@ function sendConfirmationEmail(data, serialNumber) {
     //'Food Preference : ' + data.foodPreference + '\n' +
     'Amount Paid     : ₹' + data.amount + '\n' +
     '─────────────────────────────────\n\n' +
-    'Please keep this email for your records.\n\n' +
+    'You can download your QR code from the following link: ' + savedQrUrl + '\n\n' +
+    (finalQrPic ? 'Please keep this email for your records and present the attached QR code at the venue.\n\n' : 'Please keep this email for your records.\n\n') +
     'Event Details:\n' +
     'Workshops : 13th June 2026 (Saturday)\n' +
     'Conference: 14th June 2026 (Sunday)\n' +
@@ -223,12 +267,23 @@ function sendConfirmationEmail(data, serialNumber) {
     'Monsoon CME of Pediatric Intensive Care 2026\n' +
     'Society of Pediatric Intensive Care, Kolkata (SPICK)';
 
+  let htmlBody = plainBody.replace(/\n/g, '<br>');
+  if (finalQrPic) {
+    htmlBody += '<br><br><b>Your Event QR Code:</b><br><img src="cid:qrCode" alt="Event QR Code" style="width:200px; height:200px; border:1px solid #ccc;"/><br><small>Your registration QR code is also attached to this email.</small>';
+  }
+
   const emailOptions = {
     to: data.email,
     name: EMAIL_FROM_NAME,
     subject: subject,
-    body: body
+    body: plainBody,
+    htmlBody: htmlBody
   };
+
+  if (finalQrPic) {
+    emailOptions.inlineImages = { qrCode: inlineBlob };
+    emailOptions.attachments = [attachBlob];
+  }
 
   // Only add CC/BCC if they are configured (not placeholders and not empty)
   if (typeof EMAIL_CC !== 'undefined' && EMAIL_CC && !EMAIL_CC.includes('placeholder')) {

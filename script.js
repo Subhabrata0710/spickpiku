@@ -8,7 +8,7 @@
 
   // ---- Configuration ----
   const CONFIG = {
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbylWQBeozpe4-siOgKvI2jjHR9w0Rf41NxequyJZTk1JNINTdTpPjPPCFmO7I7dXrR93w/exec', // Replace with your deployed Apps Script URL
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxPQRXI6P-Nu5qhZUcem2LrVJQF7tizT8_Lb7LvGpU8GMr8qkzznFHJTeMaZ294dKIMgw/exec', // Replace with your deployed Apps Script URL
     ANIMATION_THRESHOLD: 0.15,
     TOAST_DURATION: 4000,
     LOADER_DELAY: 600
@@ -306,8 +306,8 @@
         attendingSelect.value = 'Nursing Workshop';
         attendingSelect.disabled = true; // They can't change it
         if (workshopSelect) {
-            workshopSelect.value = 'Nursing Workshop';
-            workshopSelect.disabled = true; // Lock workshop too
+          workshopSelect.value = 'Nursing Workshop';
+          workshopSelect.disabled = true; // Lock workshop too
         }
       } else {
         attendingSelect.disabled = false;
@@ -315,8 +315,8 @@
           attendingSelect.value = '';
         }
         if (workshopSelect) {
-            workshopSelect.disabled = false;
-            if (workshopSelect.value === 'Nursing Workshop') workshopSelect.value = '';
+          workshopSelect.disabled = false;
+          if (workshopSelect.value === 'Nursing Workshop') workshopSelect.value = '';
         }
       }
 
@@ -327,14 +327,14 @@
     // Attending change handler
     attendingSelect.addEventListener('change', function () {
       if (this.value === 'Nursing Workshop') {
-          roleSelect.value = 'Nurse';
-          this.disabled = true;
-          if (workshopSelect) {
-              workshopSelect.value = 'Nursing Workshop';
-              workshopSelect.disabled = true;
-          }
-          // Re-trigger role change logic for consistency
-          roleSelect.dispatchEvent(new Event('change'));
+        roleSelect.value = 'Nurse';
+        this.disabled = true;
+        if (workshopSelect) {
+          workshopSelect.value = 'Nursing Workshop';
+          workshopSelect.disabled = true;
+        }
+        // Re-trigger role change logic for consistency
+        roleSelect.dispatchEvent(new Event('change'));
       }
       updatePrice();
       updateWorkshopVisibility();
@@ -377,7 +377,7 @@
       // Show workshop dropdown for any selection involving workshops
       if (val === 'Workshop Only' || val === 'Workshop + Conference' || val === 'Nursing Workshop') {
         workshopGroup.style.display = 'block';
-        
+
         // Hide/Show Nursing Workshop option in the workshop list
         if (workshopSelect) {
           const workshopOptions = workshopSelect.querySelectorAll('option');
@@ -391,7 +391,7 @@
               opt.disabled = isNurse;
             }
           });
-          
+
           if (isNurse) {
             workshopSelect.value = 'Nursing Workshop';
             workshopSelect.disabled = true;
