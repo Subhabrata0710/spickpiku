@@ -30,33 +30,37 @@
         <div class="divider"></div>
       </div>
 
-      <div class="grid-3" style="max-width: 900px; margin: 0 auto;">
-        <div class="card card-premium animate-on-scroll" style="text-align: center; padding: 2rem;">
-          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔬</div>
-          <h4>Workshop Only</h4>
-          <div
-            style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-accent); margin: 0.75rem 0;">
-            ₹3,000</div>
-          <p class="text-muted" style="font-size: 0.88rem;">Pre-conference workshop<br>13th June 2026</p>
-        </div>
-        <div class="card card-premium animate-on-scroll"
-          style="text-align: center; padding: 2rem; border-color: var(--color-accent); position: relative;">
-          <!-- <div style="position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--color-accent); color: var(--color-primary-dark); padding: 0.25rem 1rem; border-radius: 0 0 8px 8px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;">RECOMMENDED</div> -->
-          <div style="font-size: 2rem; margin-bottom: 0.5rem; margin-top: 0.5rem;">🏆</div>
-          <h4>Workshop + Conference</h4>
-          <div
-            style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-accent); margin: 0.75rem 0;">
-            ₹3,500</div>
-          <p class="text-muted" style="font-size: 0.88rem;">Workshop + full conference<br>13th–14th June 2026</p>
-        </div>
-        <div class="card card-premium animate-on-scroll" style="text-align: center; padding: 2rem;">
-          <div style="font-size: 2rem; margin-bottom: 0.5rem;">👩‍⚕️</div>
-          <h4>Nursing Workshop</h4>
-          <div
-            style="font-family: var(--font-heading); font-size: 2rem; color: var(--color-accent); margin: 0.75rem 0;">
-            ₹1,500</div>
-          <p class="text-muted" style="font-size: 0.88rem;">Nursing critical care workshop<br>13th June 2026</p>
-        </div>
+      <div class="table-responsive animate-on-scroll" style="max-width: 800px; margin: 0 auto; overflow-x: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 8px;">
+        <table style="width: 100%; border-collapse: collapse; text-align: center; border: 2px solid #e1c073; background: linear-gradient(135deg, #1e4b7a, #103458); color: white; font-family: var(--font-body), sans-serif; box-sizing: border-box;">
+          <thead>
+            <tr>
+              <th style="padding: 15px; border: 1px solid #e1c073; font-size: 1.15rem; font-weight: 600; width: 40%;">Categories</th>
+              <th style="padding: 15px; border: 1px solid #e1c073; font-size: 1.15rem; font-weight: 600; width: 30%;">PGTs</th>
+              <th style="padding: 15px; border: 1px solid #e1c073; font-size: 1.15rem; font-weight: 600; width: 30%;">Pediatricians</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">Nursing workshop</td>
+              <td colspan="2" style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">₹ 1,500/- for Nurses</td>
+            </tr>
+            <tr style="background: rgba(255, 255, 255, 0.05);">
+              <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">Workshop only</td>
+              <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">₹ 3,000/-</td>
+              <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">₹ 3,500/-</td>
+            </tr>
+            <tr>
+              <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">Workshop + Conference</td>
+              <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">₹ 3,500/-</td>
+              <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">₹ 4,000/-</td>
+            </tr>
+            <tr style="background: rgba(255, 255, 255, 0.05);">
+              <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">Only Conference</td>
+              <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">₹ 1,500/-</td>
+              <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">₹ 2,500/-</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -171,7 +175,7 @@
                 <option value="">— Select workshop —</option>
                 <option value="Nursing Workshop">Nursing Workshop (Medical College / AIIMS Kalyani)</option>
                 <option value="Ventilation Workshop">Ventilation Workshop (Manipal / Apollo)</option>
-                <option value="Pediatric Simulation Workshop">Pediatric Simulation Workshop (IPGMER / SSKM)</option>
+                <!-- <option value="Pediatric Simulation Workshop">Pediatric Simulation Workshop (IPGMER / SSKM)</option> -->
                 <option value="Emergencies in Office Practice">Emergencies in Office Practice (ICH)</option>
                 <option value="Procedures in PICU">Procedures in PICU (Neotia)</option>
               </select>
