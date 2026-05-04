@@ -75,7 +75,7 @@ function getSheet(name) {
           'Serial No', 'First Name', 'Last Name', 'Email', 'Phone',
           'Affiliation', 'Designation', 'Password', 'Role',
           'Attending Type', 'Workshop Name', 'Food Preference',
-          'Amount', 'Payment Screenshot URL', 'Timestamp'
+          'Amount', 'Payment Screenshot URL', 'QR Code URL', 'Timestamp', 'Voucher Code'
         ]);
         sheet.setFrozenRows(1);
       }
@@ -180,7 +180,7 @@ function registerUser(data) {
     // Columns: Serial No | First Name | Last Name | Email | Phone |
     //          Affiliation | Designation | Password | Role |
     //          Attending Type | Workshop Name | Food Preference |
-    //          Amount | Payment Screenshot URL | QR Code URL | Timestamp
+    //          Amount | Payment Screenshot URL | QR Code URL | Timestamp | Voucher Code
     sheet.appendRow([
       serialNumber,
       data.firstName || '',
@@ -197,7 +197,8 @@ function registerUser(data) {
       data.amount || 0,
       screenshotUrl,
       savedQrUrl,
-      new Date()
+      new Date(),
+      data.voucherCode || ''
     ]);
 
     // --- Send Confirmation Email ---

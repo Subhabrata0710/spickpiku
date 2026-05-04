@@ -30,19 +30,25 @@
         <div class="divider"></div>
       </div>
 
-      <div class="table-responsive animate-on-scroll" style="max-width: 800px; margin: 0 auto; overflow-x: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 8px;">
-        <table style="width: 100%; border-collapse: collapse; text-align: center; border: 2px solid #e1c073; background: linear-gradient(135deg, #1e4b7a, #103458); color: white; font-family: var(--font-body), sans-serif; box-sizing: border-box;">
+      <div class="table-responsive animate-on-scroll"
+        style="max-width: 800px; margin: 0 auto; overflow-x: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 8px;">
+        <table
+          style="width: 100%; border-collapse: collapse; text-align: center; border: 2px solid #e1c073; background: linear-gradient(135deg, #1e4b7a, #103458); color: white; font-family: var(--font-body), sans-serif; box-sizing: border-box;">
           <thead>
             <tr>
-              <th style="padding: 15px; border: 1px solid #e1c073; font-size: 1.15rem; font-weight: 600; width: 40%;">Categories</th>
-              <th style="padding: 15px; border: 1px solid #e1c073; font-size: 1.15rem; font-weight: 600; width: 30%;">PGTs</th>
-              <th style="padding: 15px; border: 1px solid #e1c073; font-size: 1.15rem; font-weight: 600; width: 30%;">Pediatricians</th>
+              <th style="padding: 15px; border: 1px solid #e1c073; font-size: 1.15rem; font-weight: 600; width: 40%;">
+                Categories</th>
+              <th style="padding: 15px; border: 1px solid #e1c073; font-size: 1.15rem; font-weight: 600; width: 30%;">
+                PGTs</th>
+              <th style="padding: 15px; border: 1px solid #e1c073; font-size: 1.15rem; font-weight: 600; width: 30%;">
+                Pediatricians</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">Nursing workshop</td>
-              <td colspan="2" style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">₹ 1,500/- for Nurses</td>
+              <td colspan="2" style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">₹ 1,500/- for Nurses
+              </td>
             </tr>
             <tr style="background: rgba(255, 255, 255, 0.05);">
               <td style="padding: 15px; border: 1px solid #e1c073; font-size: 1.05rem;">Workshop only</td>
@@ -176,7 +182,7 @@
                 <option value="Nursing Workshop">Nursing Workshop (Medical College / AIIMS Kalyani)</option>
                 <option value="Ventilation Workshop">Ventilation Workshop (Manipal / Apollo)</option>
                 <!-- <option value="Pediatric Simulation Workshop">Pediatric Simulation Workshop (IPGMER / SSKM)</option> -->
-                <option value="Emergencies in Office Practice">Emergencies in Office Practice (ICH)</option>
+                <option value="Emergencies in Office Practice">Emergencies in Office Practice (CNMC)</option>
                 <option value="Procedures in PICU">Procedures in PICU (Neotia)</option>
               </select>
               <div class="form-error">Please select a workshop</div>
@@ -190,6 +196,12 @@
                 <option value="Non-veg">Non-veg</option>
               </select>
               <div class="form-error">Please select food preference</div>
+            </div>
+
+            <!-- Voucher Code -->
+            <div class="form-group">
+              <label for="voucher-code">Voucher Code (Optional)</label>
+              <input type="text" id="voucher-code" class="form-control" placeholder="Enter voucher code if any">
             </div>
           </div>
 

@@ -8,7 +8,7 @@
 
   // ---- Configuration ----
   const CONFIG = {
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxPQRXI6P-Nu5qhZUcem2LrVJQF7tizT8_Lb7LvGpU8GMr8qkzznFHJTeMaZ294dKIMgw/exec', // Replace with your deployed Apps Script URL
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyId6PHNwH4gla-te5ulkpId_m0c9K7x-9Mi9xHLWJYyOc3NZ5mdfXzmimkogqCswqoeA/exec', // Replace with your deployed Apps Script URL
     ANIMATION_THRESHOLD: 0.15,
     TOAST_DURATION: 4000,
     LOADER_DELAY: 600
@@ -258,6 +258,7 @@
     const submitBtn = document.getElementById('submit-btn');
     const passwordField = document.getElementById('password');
     const passwordToggle = document.querySelector('.password-toggle');
+    const voucherCodeInput = document.getElementById('voucher-code');
 
     if (!roleSelect || !attendingSelect) return;
 
@@ -357,11 +358,16 @@
         priceCategory = 'Nurse';
       }
 
-      const amount = pricing[attending] ? pricing[attending][priceCategory] : null;
+      let amount = pricing[attending] ? pricing[attending][priceCategory] : null;
 
       if (amount !== null) {
+        let finalPriceType = attending + ' (' + role + ')';
+        if (voucherCodeInput && voucherCodeInput.value.trim().toUpperCase() === 'FACUL_50') {
+          amount = 2000;
+          finalPriceType += ' - Voucher Applied';
+        }
         priceDisplay.textContent = '₹' + amount.toLocaleString('en-IN');
-        priceType.textContent = attending + ' (' + role + ')';
+        priceType.textContent = finalPriceType;
         priceSection.style.display = 'block';
       } else {
         priceSection.style.display = 'none';
@@ -424,6 +430,10 @@
       });
     }
 
+    if (voucherCodeInput) {
+      voucherCodeInput.addEventListener('input', updatePrice);
+    }
+
     // Form submission
     if (form) {
       form.addEventListener('submit', async function (e) {
@@ -471,6 +481,7 @@
             attendingType: attendingSelect.value,
             workshopName: workshopSelect ? workshopSelect.value : '',
             foodPreference: document.getElementById('food').value,
+            voucherCode: voucherCodeInput ? voucherCodeInput.value.trim() : '',
             amount: parseInt(priceDisplay.textContent.replace(/[^\d]/g, '')) || 0,
             paymentScreenshot: {
               base64: base64,
