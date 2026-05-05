@@ -208,6 +208,11 @@
     const groups = formEl.querySelectorAll('.form-group[data-required]');
 
     groups.forEach(group => {
+      // Skip hidden groups
+      if (group.style.display === 'none' || window.getComputedStyle(group).display === 'none') {
+        return;
+      }
+
       const input = group.querySelector('.form-control');
       if (!input) return;
 
