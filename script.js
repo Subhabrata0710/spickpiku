@@ -281,45 +281,61 @@
       },
       'Nursing Workshop': {
         'Nurse': 1500
+      },
+      'Faculty': {
+        'Faculty': 2000
       }
     };
 
-    // Role change handler — Nurse lock logic
+    // Role change handler — Nurse/Faculty lock logic
     roleSelect.addEventListener('change', function () {
       const isNurse = this.value === 'Nurse';
+      const isFacultyRole = this.value === 'Faculty';
+      const attendingGroup = document.getElementById('attending-group');
 
-      // Lock Attending type for Nurse
+      // Lock Attending type logic
       allOptions.forEach(opt => {
         if (opt.value === '') return;
         const isNursingWorkshop = opt.value === 'Nursing Workshop';
-        
+        const isFacultyAttending = opt.value === 'Faculty';
+
         if (isNurse) {
           // If nurse, only allow Nursing Workshop
           opt.disabled = !isNursingWorkshop;
           opt.style.display = !isNursingWorkshop ? 'none' : '';
-        } else if (this.value === 'Faculty') {
-          // If faculty, allow everything including Nursing Workshop
-          opt.disabled = false;
-          opt.style.display = '';
+        } else if (isFacultyRole) {
+          // If faculty, only allow Faculty option (which is hidden)
+          opt.disabled = !isFacultyAttending;
+          opt.style.display = isFacultyAttending ? '' : 'none';
         } else {
-          // If not nurse and not faculty, hide Nursing Workshop
-          opt.disabled = isNursingWorkshop;
-          opt.style.display = isNursingWorkshop ? 'none' : '';
+          // If not nurse and not faculty, hide Nursing Workshop and Faculty options
+          opt.disabled = isNursingWorkshop || isFacultyAttending;
+          opt.style.display = (isNursingWorkshop || isFacultyAttending) ? 'none' : '';
         }
       });
 
-      // Auto-select and lock
+      // Auto-select and lock logic
       if (isNurse) {
         attendingSelect.value = 'Nursing Workshop';
         attendingSelect.disabled = true; // They can't change it
+        if (attendingGroup) attendingGroup.style.display = '';
         if (workshopSelect) {
           workshopSelect.value = 'Nursing Workshop';
           workshopSelect.disabled = true; // Lock workshop too
         }
+      } else if (isFacultyRole) {
+        attendingSelect.value = 'Faculty';
+        attendingSelect.disabled = true;
+        if (attendingGroup) attendingGroup.style.display = '';
+        if (workshopSelect) {
+          workshopSelect.value = '';
+          workshopSelect.disabled = false;
+        }
       } else {
         attendingSelect.disabled = false;
+        if (attendingGroup) attendingGroup.style.display = '';
         // Don't clear selection if it's Nursing Workshop and role is Faculty
-        if (attendingSelect.value === 'Nursing Workshop' && this.value !== 'Faculty') {
+        if ((attendingSelect.value === 'Nursing Workshop' || attendingSelect.value === 'Faculty') && this.value !== 'Faculty') {
           attendingSelect.value = '';
         }
         if (workshopSelect) {
@@ -408,6 +424,13 @@
       if (!workshopGroup) return;
       const val = attendingSelect.value;
       const isNurse = roleSelect.value === 'Nurse';
+      const isFaculty = roleSelect.value === 'Faculty';
+
+      // Hide workshop group for Faculty
+      if (isFaculty) {
+        workshopGroup.style.display = 'none';
+        return;
+      }
 
       // Show workshop dropdown for any selection involving workshops
       if (val === 'Workshop Only' || val === 'Workshop + Conference' || val === 'Nursing Workshop') {
@@ -417,7 +440,7 @@
         if (workshopSelect) {
           const workshopOptions = workshopSelect.querySelectorAll('option');
           const isFaculty = roleSelect.value === 'Faculty';
-          
+
           workshopOptions.forEach(opt => {
             if (opt.value === 'Nursing Workshop') {
               // Show if Nurse OR Faculty
