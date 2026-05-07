@@ -345,8 +345,8 @@
         }
         if (workshopSelect) {
           workshopSelect.disabled = false;
-          // Don't clear selection if it's Nursing Workshop and role is Faculty
-          if (workshopSelect.value === 'Nursing Workshop' && this.value !== 'Faculty') {
+          // Don't clear selection if it starts with Nursing Workshop and role is Faculty
+          if (workshopSelect.value.startsWith('Nursing Workshop') && this.value !== 'Faculty') {
             workshopSelect.value = '';
           }
         }
@@ -409,8 +409,21 @@
         amount = 2000;
       }
 
+      // Early bird / Special discount (May 9 - May 16, 2026)
+      const now = new Date();
+      const discountStart = new Date('2026-05-09T00:00:00');
+      const discountEnd = new Date('2026-05-16T23:59:59');
+      const isDiscountActive = now >= discountStart && now <= discountEnd;
+
       if (amount !== null) {
         let finalPriceType = attending + ' (' + role + ')';
+        
+        // Apply ₹500 discount if active and NOT Faculty
+        if (isDiscountActive && role !== 'Faculty') {
+          amount -= 500;
+          finalPriceType += ' - Early Bird Discount Applied';
+        }
+
         // Only apply coupon logic if NOT Faculty (since Faculty is flat 2000 already)
         if (role !== 'Faculty' && voucherCodeInput && voucherCodeInput.value.trim().toUpperCase() === 'FACUL_50') {
           amount = 2000;
@@ -447,7 +460,7 @@
           const isFaculty = roleSelect.value === 'Faculty';
 
           workshopOptions.forEach(opt => {
-            if (opt.value === 'Nursing Workshop') {
+            if (opt.value.startsWith('Nursing Workshop')) {
               // Show if Nurse OR Faculty
               const showNursing = isNurse || isFaculty;
               opt.style.display = showNursing ? '' : 'none';
@@ -459,9 +472,9 @@
             }
           });
 
+          // For Nurses, don't auto-lock since there are multiple nursing workshops now
           if (isNurse) {
-            workshopSelect.value = 'Nursing Workshop';
-            workshopSelect.disabled = true;
+            workshopSelect.disabled = false;
           }
         }
       } else {
