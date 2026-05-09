@@ -420,7 +420,7 @@
         
         // Apply ₹500 discount if active and NOT Faculty
         if (isDiscountActive && role !== 'Faculty') {
-          amount -= 500;
+          amount -= 1000;
           finalPriceType += ' - Early Bird Discount Applied';
         }
 
