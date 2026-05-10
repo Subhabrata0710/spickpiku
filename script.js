@@ -425,8 +425,8 @@
         }
 
         // Only apply coupon logic if NOT Faculty (since Faculty is flat 2000 already)
-        if (role !== 'Faculty' && voucherCodeInput && voucherCodeInput.value.trim().toUpperCase() === 'FACUL_50') {
-          amount = 2000;
+        if (role !== 'Faculty' && voucherCodeInput && voucherCodeInput.value.trim().toUpperCase() === 'SCPM_MODI_0') {
+          amount = 0;
           finalPriceType += ' - Voucher Applied';
         }
         priceDisplay.textContent = '₹' + amount.toLocaleString('en-IN');
