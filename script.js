@@ -417,7 +417,7 @@
 
       if (amount !== null) {
         let finalPriceType = attending + ' (' + role + ')';
-        
+
         // Apply ₹500 discount if active and NOT Faculty
         if (isDiscountActive && role !== 'Faculty') {
           amount -= 500;
