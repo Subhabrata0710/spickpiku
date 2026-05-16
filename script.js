@@ -272,10 +272,12 @@
 
     // Pricing map (Category -> Role -> Amount)
     const pricing = {
+/*
       'Workshop Only': {
         'PGT': 3000,
         'Pediatrician': 3500
       },
+*/
       'Workshop + Conference': {
         'PGT': 3500,
         'Pediatrician': 4000
