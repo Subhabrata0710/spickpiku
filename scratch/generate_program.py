@@ -1,4 +1,182 @@
-<!DOCTYPE html>
+import os
+import re
+
+css_to_append = """
+/* =====================
+   SCIENTIFIC PROGRAM SECTION
+===================== */
+.program-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 14px 35px;
+  background: transparent;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-primary);
+}
+
+.program-timeline {
+  max-width: 900px;
+  margin: 0 auto;
+  display: none;
+}
+
+.program-timeline.active {
+  display: block;
+}
+
+.timeline-item {
+  background: var(--color-background);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--color-accent);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.timeline-item:hover {
+  background: #ffffff;
+  transform: translateX(10px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.timeline-time {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.timeline-title {
+  font-size: 1.3rem;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.timeline-speaker {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  font-style: normal;
+}
+
+.timeline-speaker strong {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Program Row Alignment */
+.program-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px;
+  align-items: flex-start;
+}
+
+.program-label {
+  min-width: 140px;
+  color: var(--color-primary);
+  font-weight: 600;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.program-names {
+  color: var(--color-text);
+}
+
+@media (max-width: 600px) {
+  .program-row {
+      flex-direction: column;
+  }
+  .program-label {
+      min-width: auto;
+      margin-bottom: 2px;
+  }
+}
+"""
+
+style_css_path = r'd:\Personal\Dadas\spickpiku\style.css'
+with open(style_css_path, 'r', encoding='utf-8') as f:
+    css_content = f.read()
+
+if '.program-tabs' not in css_content:
+    with open(style_css_path, 'a', encoding='utf-8') as f:
+        f.write(css_to_append)
+    print("Appended CSS.")
+
+# Script JS addition
+js_to_append = """
+  // ============================================================
+  // PROGRAM TABS
+  // ============================================================
+  function initProgramTabs() {
+    const tabs = document.querySelectorAll('.tab-btn');
+    const timelines = document.querySelectorAll('.program-timeline');
+
+    if (tabs.length === 0) return;
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs and timelines
+        tabs.forEach(t => t.classList.remove('active'));
+        timelines.forEach(t => t.classList.remove('active'));
+
+        // Add active class to clicked tab
+        tab.classList.add('active');
+
+        // Show corresponding timeline
+        const day = tab.getAttribute('data-day');
+        const targetTimeline = document.querySelector(`.program-timeline[data-day="${day}"]`);
+        if (targetTimeline) {
+          targetTimeline.classList.add('active');
+        }
+      });
+    });
+  }
+
+  // Call initProgramTabs after DOM loads
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProgramTabs);
+  } else {
+    initProgramTabs();
+  }
+"""
+
+script_js_path = r'd:\Personal\Dadas\spickpiku\script.js'
+with open(script_js_path, 'r', encoding='utf-8') as f:
+    js_content = f.read()
+
+if 'initProgramTabs' not in js_content:
+    with open(script_js_path, 'a', encoding='utf-8') as f:
+        f.write(js_to_append)
+    print("Appended JS.")
+
+# Program HTML Generation
+html_content = """<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -463,3 +641,10 @@
 </body>
 
 </html>
+"""
+
+program_html_path = r'd:\Personal\Dadas\spickpiku\program.html'
+with open(program_html_path, 'w', encoding='utf-8') as f:
+    f.write(html_content)
+print("Updated program.html")
+

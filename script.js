@@ -613,3 +613,37 @@
   window.SPICK_CONFIG = CONFIG;
 
 })();
+  // ============================================================
+  // PROGRAM TABS
+  // ============================================================
+  function initProgramTabs() {
+    const tabs = document.querySelectorAll('.tab-btn');
+    const timelines = document.querySelectorAll('.program-timeline');
+
+    if (tabs.length === 0) return;
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs and timelines
+        tabs.forEach(t => t.classList.remove('active'));
+        timelines.forEach(t => t.classList.remove('active'));
+
+        // Add active class to clicked tab
+        tab.classList.add('active');
+
+        // Show corresponding timeline
+        const day = tab.getAttribute('data-day');
+        const targetTimeline = document.querySelector(`.program-timeline[data-day="${day}"]`);
+        if (targetTimeline) {
+          targetTimeline.classList.add('active');
+        }
+      });
+    });
+  }
+
+  // Call initProgramTabs after DOM loads
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProgramTabs);
+  } else {
+    initProgramTabs();
+  }
