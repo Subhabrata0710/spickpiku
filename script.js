@@ -272,19 +272,21 @@
 
     // Pricing map (Category -> Role -> Amount)
     const pricing = {
-/*
-      'Workshop Only': {
-        'PGT': 3000,
-        'Pediatrician': 3500
-      },
-*/
+      /*
+            'Workshop Only': {
+              'PGT': 3000,
+              'Pediatrician': 3500
+            },
+      */
       'Workshop + Conference': {
         'PGT': 3500,
-        'Pediatrician': 4000
+        'Pediatrician': 4000,
+        'Med_Tech': 3000
       },
       'Only Conference': {
         'PGT': 1500,
-        'Pediatrician': 2500
+        'Pediatrician': 2500,
+        'Med_Tech': 1000
       },
       'Nursing Workshop': {
         'Nurse': 1500
@@ -396,12 +398,14 @@
         return;
       }
 
-      // Determine price category (Pediatrician vs PGT)
+      // Determine price category (Pediatrician vs PGT vs Med_Tech)
       let priceCategory = 'Pediatrician';
       if (role === 'Post Graduate Trainee') {
         priceCategory = 'PGT';
       } else if (role === 'Nurse') {
         priceCategory = 'Nurse';
+      } else if (role === 'Med_Tech') {
+        priceCategory = 'Med_Tech';
       }
 
       let amount = pricing[attending] ? pricing[attending][priceCategory] : null;
@@ -612,37 +616,37 @@
   window.SPICK_CONFIG = CONFIG;
 
 })();
-  // ============================================================
-  // PROGRAM TABS
-  // ============================================================
-  function initProgramTabs() {
-    const tabs = document.querySelectorAll('.tab-btn');
-    const timelines = document.querySelectorAll('.program-timeline');
+// ============================================================
+// PROGRAM TABS
+// ============================================================
+function initProgramTabs() {
+  const tabs = document.querySelectorAll('.tab-btn');
+  const timelines = document.querySelectorAll('.program-timeline');
 
-    if (tabs.length === 0) return;
+  if (tabs.length === 0) return;
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        // Remove active class from all tabs and timelines
-        tabs.forEach(t => t.classList.remove('active'));
-        timelines.forEach(t => t.classList.remove('active'));
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove active class from all tabs and timelines
+      tabs.forEach(t => t.classList.remove('active'));
+      timelines.forEach(t => t.classList.remove('active'));
 
-        // Add active class to clicked tab
-        tab.classList.add('active');
+      // Add active class to clicked tab
+      tab.classList.add('active');
 
-        // Show corresponding timeline
-        const day = tab.getAttribute('data-day');
-        const targetTimeline = document.querySelector(`.program-timeline[data-day="${day}"]`);
-        if (targetTimeline) {
-          targetTimeline.classList.add('active');
-        }
-      });
+      // Show corresponding timeline
+      const day = tab.getAttribute('data-day');
+      const targetTimeline = document.querySelector(`.program-timeline[data-day="${day}"]`);
+      if (targetTimeline) {
+        targetTimeline.classList.add('active');
+      }
     });
-  }
+  });
+}
 
-  // Call initProgramTabs after DOM loads
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initProgramTabs);
-  } else {
-    initProgramTabs();
-  }
+// Call initProgramTabs after DOM loads
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initProgramTabs);
+} else {
+  initProgramTabs();
+}
