@@ -286,7 +286,7 @@
       'Only Conference': {
         'PGT': 1500,
         'Pediatrician': 2500,
-        'Med_Tech': 1000
+        'Med_Tech': 2000
       },
       'Nursing Workshop': {
         'Nurse': 1500
