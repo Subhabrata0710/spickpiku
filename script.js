@@ -387,7 +387,7 @@
         return;
       }
 
-      const isNurseConfVoucher = role === 'Nurse' && voucherCodeInput && voucherCodeInput.value.trim().toUpperCase() === 'NURSE_CONF';
+      const isNurseConfVoucher = role === 'Nurse' && voucherCodeInput && voucherCodeInput.value.trim().toUpperCase() === 'NURSE';
 
       if (isNurseConfVoucher) {
         const amount = 2000;
@@ -557,7 +557,7 @@
             designation: document.getElementById('designation').value.trim(),
             password: passwordField.value.trim(),
             role: roleSelect.value,
-            attendingType: (roleSelect.value === 'Nurse' && voucherCodeInput && voucherCodeInput.value.trim().toUpperCase() === 'NURSE_CONF') ? 'conf registered' : attendingSelect.value,
+            attendingType: (roleSelect.value === 'Nurse' && voucherCodeInput && voucherCodeInput.value.trim().toUpperCase() === 'NURSE') ? 'conf registered' : attendingSelect.value,
             workshopName: workshopSelect ? workshopSelect.value : '',
             foodPreference: document.getElementById('food').value,
             voucherCode: voucherCodeInput ? voucherCodeInput.value.trim() : '',
