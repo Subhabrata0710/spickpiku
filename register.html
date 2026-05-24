@@ -76,6 +76,7 @@
     </div>
   </section>
 
+
   <!-- Registration Form -->
   <section class="section section-alt">
     <div class="container">
@@ -84,6 +85,45 @@
         <div class="divider"></div>
         <p>Fill in your details below to register</p>
       </div>
+      <style>
+        @keyframes blinkFast {
+          0% {
+            opacity: 1;
+          }
+
+          50% {
+            /* opacity: 1; */
+            color: #464700;
+          }
+
+          100% {
+            opacity: 1;
+          }
+        }
+
+        .blink-text {
+          animation: blinkFast 0.8s infinite;
+        }
+      </style>
+
+      <div
+        style="background-color: #ff0000; border-left: 5px solid #5e1600; padding: 16px 20px 20px 20px; margin-bottom: 20px; border-radius: 8px; text-align: center;">
+        <p class="blink-text" style="color: #fffb00; margin: 0; font-size: 15px; line-height: 1.6;">
+          Seats are <strong>Full</strong> for the <strong>Nursing Workshop at Medical College Kolkata</strong>.
+          <br>Register quickly, as
+          the remaining
+          seats
+          for other workshops are filling up fast.
+
+        </p>
+      </div>
+
+
+
+
+
+
+
 
       <div style="max-width: 750px; margin: 0 auto;">
         <form id="registration-form" class="animate-on-scroll" novalidate>
@@ -187,8 +227,8 @@
               <label for="workshop">Workshop Name <span class="required">*</span></label>
               <select id="workshop" class="form-control">
                 <option value="">— Select workshop —</option>
-                <option value="Nursing Workshop Medical College Kolkata">Nursing Workshop (Medical College Kolkata)
-                </option>
+                <!-- <option value="Nursing Workshop Medical College Kolkata">Nursing Workshop (Medical College Kolkata)
+                </option> -->
                 <option value="Nursing Workshop AIIMS Kalyani">Nursing Workshop (AIIMS Kalyani)</option>
                 <option value="Ventilation Workshop Manipal">Ventilation Workshop (Manipal)</option>
                 <option value="Ventilation Workshop Apollo">Ventilation Workshop (Apollo)</option>
