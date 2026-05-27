@@ -71,13 +71,13 @@
             <div class="upload-icon">📁</div>
             <p><strong>Click to upload</strong> or drag and drop</p>
             <p class="text-muted">PDF, DOC, PPT, Images (Max 10MB)</p>
-            <input type="file" id="file-upload" class="file-input"
-              accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png">
+            <input type="file" id="file-upload" class="file-input" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png">
           </div>
 
           <p id="upload-status" class="upload-status"></p>
 
-          <button class="btn btn-primary" style="width:100%; margin-top: 1rem;" onclick="uploadAbstract()" id="upload-btn">
+          <button class="btn btn-primary" style="width:100%; margin-top: 1rem;" onclick="uploadAbstract()"
+            id="upload-btn">
             Upload File
           </button>
         </div>
@@ -149,6 +149,40 @@
   <button class="back-to-top" aria-label="Back to top">↑</button>
   <script src="script.js"></script>
   <script>
+
+
+    // ---- Abstract Submission Deadline ----
+    const ABSTRACT_DEADLINE = new Date('2026-05-28T00:00:00+05:30'); // IST midnight
+
+    function isSubmissionClosed() {
+      return new Date() >= ABSTRACT_DEADLINE;
+    }
+
+    function disableSubmissionUI() {
+      const uploadArea = document.getElementById('upload-area');
+      const uploadBtn = document.getElementById('upload-btn');
+
+      if (uploadArea) {
+        uploadArea.style.opacity = '0.5';
+        uploadArea.style.pointerEvents = 'none';
+      }
+
+      if (uploadBtn) {
+        uploadBtn.disabled = true;
+        uploadBtn.textContent = 'Submission Closed';
+      }
+
+      document.getElementById('upload-status').innerHTML =
+        '<span style="color:red;">Abstract submission is now closed.</span>';
+    }
+
+
+
+
+
+
+
+
     // ---- Auth Guard ----
     document.addEventListener('DOMContentLoaded', function () {
       const session = localStorage.getItem('spick_session');
@@ -166,6 +200,9 @@
       document.getElementById('reg-type').textContent = user.attendingType || '—';
 
       loadMyFiles();
+      if (isSubmissionClosed()) {
+        disableSubmissionUI();
+      }
     });
 
     // ---- File Upload: Drag & Drop + Click ----
@@ -208,6 +245,10 @@
 
     // ---- Upload Abstract ----
     async function uploadAbstract() {
+      if (isSubmissionClosed()) {
+        showToast('Abstract submission deadline has passed.', 'error');
+        return;
+      }
       const file = fileInput.files[0];
       if (!file) {
         showToast('Please select a file to upload.', 'error');
@@ -295,22 +336,22 @@
         if (result.success && result.files && result.files.length > 0) {
           fileList.innerHTML = result.files.map(f =>
             '<div class="file-item">' +
-              '<div class="file-info">' +
-                '<span class="file-icon">📄</span>' +
-                '<div>' +
-                  '<strong>' + f.fileName + '</strong>' +
-                  '<p class="text-muted" style="font-size:0.82rem;">' + f.uploadDate + '</p>' +
-                '</div>' +
-              '</div>' +
-              '<a href="' + f.fileUrl + '" target="_blank" class="btn btn-outline" style="padding:0.4rem 1rem; font-size:0.85rem;">View</a>' +
+            '<div class="file-info">' +
+            '<span class="file-icon">📄</span>' +
+            '<div>' +
+            '<strong>' + f.fileName + '</strong>' +
+            '<p class="text-muted" style="font-size:0.82rem;">' + f.uploadDate + '</p>' +
+            '</div>' +
+            '</div>' +
+            '<a href="' + f.fileUrl + '" target="_blank" class="btn btn-outline" style="padding:0.4rem 1rem; font-size:0.85rem;">View</a>' +
             '</div>'
           ).join('');
         } else {
           fileList.innerHTML =
             '<div class="empty-state">' +
-              '<div class="empty-icon">📭</div>' +
-              '<p>No files uploaded yet</p>' +
-              '<p class="text-muted">Upload your first abstract above</p>' +
+            '<div class="empty-icon">📭</div>' +
+            '<p>No files uploaded yet</p>' +
+            '<p class="text-muted">Upload your first abstract above</p>' +
             '</div>';
         }
       } catch (err) {
