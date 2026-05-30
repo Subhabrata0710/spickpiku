@@ -129,33 +129,50 @@
 </div>
 
 <script>
-  // ── Desktop: click to toggle ──────────────────────────────────
-  const progTrigger = document.getElementById('prog-trigger');
-  const progDropdown = document.getElementById('prog-dropdown');
-  const progChevron = document.getElementById('prog-chevron');
+  // Wait until DOM is fully ready — handles dynamic injection via script.js
+  function initNavDropdowns() {
+    // ── Desktop ───────────────────────────────────────────────
+    const progTrigger = document.getElementById('prog-trigger');
+    const progDropdown = document.getElementById('prog-dropdown');
+    const progChevron = document.getElementById('prog-chevron');
 
-  progTrigger.addEventListener('click', function (e) {
-    e.preventDefault();
-    const isOpen = progDropdown.style.display === 'block';
-    progDropdown.style.display = isOpen ? 'none' : 'block';
-    progChevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
-  });
+    if (progTrigger && progDropdown && progChevron) {
+      progTrigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        const isOpen = progDropdown.style.display === 'block';
+        progDropdown.style.display = isOpen ? 'none' : 'block';
+        progChevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
 
-  document.addEventListener('click', function (e) {
-    if (!progTrigger.closest('div').contains(e.target)) {
-      progDropdown.style.display = 'none';
-      progChevron.style.transform = 'rotate(0deg)';
+      document.addEventListener('click', function (e) {
+        if (!progTrigger.closest('div').contains(e.target)) {
+          progDropdown.style.display = 'none';
+          progChevron.style.transform = 'rotate(0deg)';
+        }
+      });
     }
-  });
 
-  // ── Mobile: arrow toggles sub-menu, text link navigates freely ─
-  const mobileChevronBtn = document.getElementById('mobile-prog-chevron-btn');
-  const mobileSub = document.getElementById('mobile-prog-sub');
-  const mobileChevron = document.getElementById('mobile-prog-chevron');
+    // ── Mobile ────────────────────────────────────────────────
+    const mobileChevronBtn = document.getElementById('mobile-prog-chevron-btn');
+    const mobileSub = document.getElementById('mobile-prog-sub');
+    const mobileChevron = document.getElementById('mobile-prog-chevron');
 
-  mobileChevronBtn.addEventListener('click', function () {
-    const isOpen = mobileSub.style.display === 'block';
-    mobileSub.style.display = isOpen ? 'none' : 'block';
-    mobileChevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
-  });
+    if (mobileChevronBtn && mobileSub && mobileChevron) {
+      mobileChevronBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const isOpen = mobileSub.style.display === 'block';
+        mobileSub.style.display = isOpen ? 'none' : 'block';
+        mobileChevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+    }
+  }
+
+  // If nav is injected dynamically, the script inside it runs immediately
+  // after injection — but DOMContentLoaded may have already fired.
+  // This handles both cases safely.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavDropdowns);
+  } else {
+    initNavDropdowns();
+  }
 </script>
