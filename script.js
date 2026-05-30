@@ -17,8 +17,52 @@
   // ---- DOM Ready ----
   document.addEventListener('DOMContentLoaded', init);
 
+
+
+
+  function initNavDropdowns() {
+    // ── Desktop ───────────────────────────────────────────────
+    const progTrigger = document.getElementById('prog-trigger');
+    const progDropdown = document.getElementById('prog-dropdown');
+    const progChevron = document.getElementById('prog-chevron');
+
+    if (progTrigger && progDropdown && progChevron) {
+      progTrigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        const isOpen = progDropdown.style.display === 'block';
+        progDropdown.style.display = isOpen ? 'none' : 'block';
+        progChevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!progTrigger.closest('div').contains(e.target)) {
+          progDropdown.style.display = 'none';
+          progChevron.style.transform = 'rotate(0deg)';
+        }
+      });
+    }
+
+    // ── Mobile ────────────────────────────────────────────────
+    const mobileChevronBtn = document.getElementById('mobile-prog-chevron-btn');
+    const mobileSub = document.getElementById('mobile-prog-sub');
+    const mobileChevron = document.getElementById('mobile-prog-chevron');
+
+    if (mobileChevronBtn && mobileSub && mobileChevron) {
+      mobileChevronBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const isOpen = mobileSub.style.display === 'block';
+        mobileSub.style.display = isOpen ? 'none' : 'block';
+        mobileChevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+    }
+  }
+
+
   function init() {
-    loadComponent('nav-placeholder', 'nav.html', initNavigation);
+    loadComponent('nav-placeholder', 'nav.html', function () {
+      initNavigation();
+      initNavDropdowns();
+    });
     loadComponent('footer-placeholder', 'footer.html');
     initScrollAnimations();
     initSmoothScroll();

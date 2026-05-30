@@ -30,7 +30,6 @@
         </a>
         <div id="prog-dropdown"
           style="display:none; position:absolute; top:calc(100% + 8px); left:0; background:#fff; border:1px solid #e0e0e0; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.12); min-width:320px; z-index:9999; padding:6px 0;">
-          <!-- 13th June -->
           <div
             style="padding:6px 16px 2px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#999;">
             13th June</div>
@@ -65,7 +64,6 @@
             Emergencies — Calcutta National Medical College
           </a>
           <div style="height:1px; background:#efefef; margin:4px 0;"></div>
-          <!-- 14th June -->
           <div
             style="padding:6px 16px 2px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#999;">
             14th June</div>
@@ -101,9 +99,10 @@
   <!-- Program row: text navigates, arrow toggles sub-menu -->
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <a href="program.html" style="flex:1;">PROGRAM</a>
-    <span id="mobile-prog-chevron-btn" style="padding: 8px 16px; cursor:pointer; display:flex; align-items:center;">
-      <svg id="mobile-prog-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"
-        style="transition: transform 0.2s;">
+    <span id="mobile-prog-chevron-btn"
+      style="padding: 12px 20px; cursor:pointer; display:flex; align-items:center; justify-content:center; min-width:48px; min-height:48px;">
+      <svg id="mobile-prog-chevron" width="20" height="20" viewBox="0 0 12 12" fill="none"
+        style="transition: transform 0.2s; stroke: currentColor;">
         <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
           stroke-linejoin="round" />
       </svg>
@@ -127,52 +126,3 @@
   <a href="contact.html">CONTACT</a>
   <a href="login.html">ABSTRACT SUBMISSION</a>
 </div>
-
-<script>
-  // Wait until DOM is fully ready — handles dynamic injection via script.js
-  function initNavDropdowns() {
-    // ── Desktop ───────────────────────────────────────────────
-    const progTrigger = document.getElementById('prog-trigger');
-    const progDropdown = document.getElementById('prog-dropdown');
-    const progChevron = document.getElementById('prog-chevron');
-
-    if (progTrigger && progDropdown && progChevron) {
-      progTrigger.addEventListener('click', function (e) {
-        e.preventDefault();
-        const isOpen = progDropdown.style.display === 'block';
-        progDropdown.style.display = isOpen ? 'none' : 'block';
-        progChevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!progTrigger.closest('div').contains(e.target)) {
-          progDropdown.style.display = 'none';
-          progChevron.style.transform = 'rotate(0deg)';
-        }
-      });
-    }
-
-    // ── Mobile ────────────────────────────────────────────────
-    const mobileChevronBtn = document.getElementById('mobile-prog-chevron-btn');
-    const mobileSub = document.getElementById('mobile-prog-sub');
-    const mobileChevron = document.getElementById('mobile-prog-chevron');
-
-    if (mobileChevronBtn && mobileSub && mobileChevron) {
-      mobileChevronBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        const isOpen = mobileSub.style.display === 'block';
-        mobileSub.style.display = isOpen ? 'none' : 'block';
-        mobileChevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
-      });
-    }
-  }
-
-  // If nav is injected dynamically, the script inside it runs immediately
-  // after injection — but DOMContentLoaded may have already fired.
-  // This handles both cases safely.
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initNavDropdowns);
-  } else {
-    initNavDropdowns();
-  }
-</script>
