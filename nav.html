@@ -97,15 +97,18 @@
   <a href="index.html">HOME</a>
   <a href="about.html">ABOUT</a>
   <a href="committee.html">OFFICE BEARERS</a>
-  <!-- Program toggle -->
-  <a href="program.html" id="mobile-prog-toggle"
-    style="display:flex; justify-content:space-between; align-items:center;">
-    PROGRAM
-    <svg id="mobile-prog-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"
-      style="transition: transform 0.2s;">
-      <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-  </a>
+
+  <!-- Program row: text navigates, arrow toggles sub-menu -->
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <a href="program.html" style="flex:1;">PROGRAM</a>
+    <span id="mobile-prog-chevron-btn" style="padding: 8px 16px; cursor:pointer; display:flex; align-items:center;">
+      <svg id="mobile-prog-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"
+        style="transition: transform 0.2s;">
+        <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </span>
+  </div>
   <div id="mobile-prog-sub"
     style="display:none; padding-left:16px; border-left:2px solid rgba(255,255,255,0.2); margin: 4px 0 8px;">
     <a href="program.html#13-nursing-kalyani" style="font-size:12px; opacity:0.85;">Nursing — AIIMS Kalyani</a>
@@ -117,6 +120,7 @@
     <a href="program.html#13-emergencies-cnmc" style="font-size:12px; opacity:0.85;">Emergencies — CNMC</a>
     <a href="program.html#14-main-conference" style="font-size:12px; opacity:0.85;">Main Conference — The Park</a>
   </div>
+
   <a href="register.html">REGISTRATION</a>
   <a href="venue.html">VENUE</a>
   <a href="sponsor.html">SPONSORS</a>
@@ -137,7 +141,6 @@
     progChevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
   });
 
-  // Close desktop dropdown when clicking anywhere else
   document.addEventListener('click', function (e) {
     if (!progTrigger.closest('div').contains(e.target)) {
       progDropdown.style.display = 'none';
@@ -145,17 +148,14 @@
     }
   });
 
-  // ── Mobile: click chevron area to expand, link still navigates ─
-  const mobileToggle = document.getElementById('mobile-prog-toggle');
+  // ── Mobile: arrow toggles sub-menu, text link navigates freely ─
+  const mobileChevronBtn = document.getElementById('mobile-prog-chevron-btn');
   const mobileSub = document.getElementById('mobile-prog-sub');
   const mobileChevron = document.getElementById('mobile-prog-chevron');
 
-  mobileToggle.addEventListener('click', function (e) {
-    // If user taps the chevron half, expand only; otherwise navigate
+  mobileChevronBtn.addEventListener('click', function () {
     const isOpen = mobileSub.style.display === 'block';
     mobileSub.style.display = isOpen ? 'none' : 'block';
     mobileChevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
-    // Prevent navigation so the sub-menu reveals first
-    e.preventDefault();
   });
 </script>
