@@ -2,10 +2,8 @@
      SPICK PICU — Navigation Bar
      Loaded dynamically into all pages via script.js
      ============================================================ -->
-
 <nav class="navbar" role="navigation" aria-label="Main navigation">
   <div class="container">
-
     <!-- Brand -->
     <a href="index.html" class="nav-brand">
       <img src="images/logo.jpg" alt="SPICK Logo"
@@ -15,34 +13,91 @@
         <span class="nav-brand-sub">Society of Pediatric Intensive Care, Kolkata</span>
       </div>
     </a>
-
     <!-- Desktop Links -->
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="committee.html">Office Bearers</a>
       <!-- <a href="speakers.html">Speakers</a> -->
-      <a href="program.html">Program</a>
+
+      <!-- Program dropdown -->
+      <div style="position: relative; display: inline-block;">
+        <a href="program.html" style="display: inline-flex; align-items: center; gap: 4px;"
+          onmouseenter="this.parentElement.querySelector('.prog-dropdown').style.display='block'"
+          onmouseleave="this.parentElement.querySelector('.prog-dropdown').style.display='none'">
+          Program
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="margin-top:1px">
+            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
+        <div class="prog-dropdown"
+          style="display:none; position:absolute; top:100%; left:0; background:#fff; border:1px solid #e0e0e0; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.12); min-width:320px; z-index:9999; padding:6px 0;"
+          onmouseenter="this.style.display='block'" onmouseleave="this.style.display='none'">
+          <!-- 13th June -->
+          <div
+            style="padding:6px 16px 2px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#999;">
+            13th June</div>
+          <a href="program.html#13-nursing-kalyani"
+            style="display:block; padding:8px 16px; font-size:13.5px; color:#333; text-decoration:none; white-space:nowrap; border-radius:0;"
+            onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background='transparent'">
+            Nursing Workshop — AIIMS, Kalyani
+          </a>
+          <a href="program.html#13-nursing-medical-college"
+            style="display:block; padding:8px 16px; font-size:13.5px; color:#333; text-decoration:none; white-space:nowrap;"
+            onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background='transparent'">
+            Nursing Workshop — Medical College, Kolkata
+          </a>
+          <a href="program.html#13-ventilation-manipal"
+            style="display:block; padding:8px 16px; font-size:13.5px; color:#333; text-decoration:none; white-space:nowrap;"
+            onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background='transparent'">
+            Ventilation Workshop — Manipal Hospitals
+          </a>
+          <a href="program.html#13-ventilation-apollo"
+            style="display:block; padding:8px 16px; font-size:13.5px; color:#333; text-decoration:none; white-space:nowrap;"
+            onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background='transparent'">
+            Ventilation Workshop — Apollo Multispeciality
+          </a>
+          <a href="program.html#13-procedures-neotia"
+            style="display:block; padding:8px 16px; font-size:13.5px; color:#333; text-decoration:none; white-space:nowrap;"
+            onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background='transparent'">
+            Procedures in PICU — Neotia, Newtown
+          </a>
+          <a href="program.html#13-emergencies-cnmc"
+            style="display:block; padding:8px 16px; font-size:13.5px; color:#333; text-decoration:none; white-space:nowrap;"
+            onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background='transparent'">
+            Emergencies — Calcutta National Medical College
+          </a>
+          <!-- Divider -->
+          <div style="height:1px; background:#efefef; margin:4px 0;"></div>
+          <!-- 14th June -->
+          <div
+            style="padding:6px 16px 2px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#999;">
+            14th June</div>
+          <a href="program.html#14-main-conference"
+            style="display:block; padding:8px 16px; font-size:13.5px; color:#333; text-decoration:none; white-space:nowrap;"
+            onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background='transparent'">
+            Main Conference — The Park, Kolkata
+          </a>
+        </div>
+      </div>
+
       <a href="venue.html">Venue</a>
       <a href="sponsor.html">Sponsors</a>
       <a href="contact.html">Contact</a>
       <a href="login.html">Abstract Submission</a>
       <a href="register.html" class="nav-register-btn">Register</a>
     </div>
-
     <!-- Hamburger Toggle -->
     <div class="nav-toggle" aria-label="Toggle menu" role="button" tabindex="0">
       <span></span>
       <span></span>
       <span></span>
     </div>
-
   </div>
 </nav>
-
 <!-- Overlay (darkens background when mobile menu is open) — OUTSIDE nav -->
 <div class="nav-overlay"></div>
-
 <!-- Mobile Menu (slides in from right) — OUTSIDE nav for proper positioning -->
 <div class="nav-mobile">
   <a href="index.html">HOME</a>
@@ -50,6 +105,16 @@
   <a href="committee.html">OFFICE BEARERS</a>
   <!-- <a href="speakers.html">SPEAKERS</a> -->
   <a href="program.html">PROGRAM</a>
+  <div style="padding-left: 16px; border-left: 2px solid rgba(255,255,255,0.2); margin: 4px 0 8px;">
+    <a href="program.html#13-nursing-kalyani" style="font-size:12px; opacity:0.85;">↳ Nursing — AIIMS Kalyani</a>
+    <a href="program.html#13-nursing-medical-college" style="font-size:12px; opacity:0.85;">↳ Nursing — Medical
+      College</a>
+    <a href="program.html#13-ventilation-manipal" style="font-size:12px; opacity:0.85;">↳ Ventilation — Manipal</a>
+    <a href="program.html#13-ventilation-apollo" style="font-size:12px; opacity:0.85;">↳ Ventilation — Apollo</a>
+    <a href="program.html#13-procedures-neotia" style="font-size:12px; opacity:0.85;">↳ Procedures — Neotia</a>
+    <a href="program.html#13-emergencies-cnmc" style="font-size:12px; opacity:0.85;">↳ Emergencies — CNMC</a>
+    <a href="program.html#14-main-conference" style="font-size:12px; opacity:0.85;">↳ Main Conference — The Park</a>
+  </div>
   <a href="register.html">REGISTRATION</a>
   <a href="venue.html">VENUE</a>
   <a href="sponsor.html">SPONSORS</a>
