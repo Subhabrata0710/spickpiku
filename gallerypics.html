@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery | Monsoon CME — SPICK PICU</title>
+  <meta name="description" content="Event Gallery for Monsoon CME of Pediatric Intensive Care 2026.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Gallery Grid */
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 10px;
+      padding: 20px 0;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      aspect-ratio: 1; /* Keep items square */
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Hover Overlay */
+    .gallery-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      gap: 10px;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-btn {
+      padding: 5px 15px;
+      background: #00bcd4; /* Brand accent color */
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      width: 80px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-btn {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+        width: 60px;
+      }
+    }
+
+    .gallery-btn:hover {
+      background: #008ba3;
+    }
+
+    /* Lightbox (Enlarge) Styles */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 40px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .lightbox-download {
+      margin-top: 20px;
+      padding: 10px 25px;
+      background: #00bcd4;
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+    }
+    
+    .lightbox-download:hover {
+      background: #008ba3;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>Event Gallery</h1>
+      <div class="divider"></div>
+      <p>Memories from our latest events</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <h2>Photo Gallery</h2>
+        <div class="divider"></div>
+      </div>
+      
+      <!-- The images will be injected here by JavaScript -->
+      <div class="gallery-container" id="gallery-container">
+        <!-- Loader can be placed here while fetching images -->
+        <p style="grid-column: 1 / -1; text-align: center;">Loading images...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="Enlarged Image">
+    <a href="#" class="lightbox-download" id="lightbox-download-btn" download>Download</a>
+  </div>
+
+  <div id="footer-placeholder"></div>
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      
+      // =================================================================
+      // INSTRUCTIONS FOR GOOGLE DRIVE IMAGES:
+      // Since Google Drive doesn't allow standard frontend directory scraping,
+      // you need an array of direct links or file IDs. 
+      // 
+      // If you have a Google Drive File ID (e.g., from a link like 
+      // drive.google.com/file/d/YOUR_FILE_ID/view), paste the ID below.
+      // We use 'https://lh3.googleusercontent.com/d/' to load them.
+      // =================================================================
+      
+      const imageIds = [
+        // Replace these with your actual Google Drive image IDs
+        '1aB2c3D4e5F6g7H8i9J0kL', // Example ID
+        '1aB2c3D4e5F6g7H8i9J0kL',
+        '1aB2c3D4e5F6g7H8i9J0kL',
+        '1aB2c3D4e5F6g7H8i9J0kL',
+        '1aB2c3D4e5F6g7H8i9J0kL',
+        '1aB2c3D4e5F6g7H8i9J0kL',
+        '1aB2c3D4e5F6g7H8i9J0kL',
+        '1aB2c3D4e5F6g7H8i9J0kL',
+        '1aB2c3D4e5F6g7H8i9J0kL',
+        '1aB2c3D4e5F6g7H8i9J0kL',
+        '1aB2c3D4e5F6g7H8i9J0kL',
+        '1aB2c3D4e5F6g7H8i9J0kL'
+      ];
+
+      const galleryContainer = document.getElementById('gallery-container');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxClose = document.getElementById('lightbox-close');
+      const lightboxDownload = document.getElementById('lightbox-download-btn');
+
+      // Function to generate the direct link from Google Drive ID
+      function getGoogleDriveDirectLink(id) {
+        return `https://lh3.googleusercontent.com/d/${id}`;
+      }
+
+      function renderGallery() {
+        galleryContainer.innerHTML = ''; // Clear loading text
+        
+        // Loop through images to build grid items
+        imageIds.forEach((id, index) => {
+          
+          const url = getGoogleDriveDirectLink(id); 
+
+          const item = document.createElement('div');
+          item.className = 'gallery-item';
+          
+          // Image element
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = `Gallery Image ${index + 1}`;
+          
+          // Overlay
+          const overlay = document.createElement('div');
+          overlay.className = 'gallery-overlay';
+          
+          // Enlarge Button
+          const enlargeBtn = document.createElement('button');
+          enlargeBtn.className = 'gallery-btn';
+          enlargeBtn.innerText = 'Enlarge';
+          enlargeBtn.onclick = (e) => {
+            e.stopPropagation();
+            openLightbox(url);
+          };
+          
+          // Download Button
+          // We use fetch and blob to force download from URL
+          const downloadBtn = document.createElement('button');
+          downloadBtn.className = 'gallery-btn';
+          downloadBtn.innerText = 'Download';
+          downloadBtn.onclick = (e) => {
+            e.stopPropagation();
+            downloadImage(url, `gallery_image_${index + 1}.jpg`);
+          };
+          
+          overlay.appendChild(enlargeBtn);
+          overlay.appendChild(downloadBtn);
+          
+          item.appendChild(img);
+          item.appendChild(overlay);
+          
+          // Clicking anywhere on item enlarges it
+          item.onclick = () => openLightbox(url);
+          
+          galleryContainer.appendChild(item);
+        });
+      }
+      
+      // Enlarge Image
+      function openLightbox(url) {
+        lightboxImg.src = url;
+        
+        // For the lightbox download button
+        lightboxDownload.onclick = (e) => {
+          e.preventDefault();
+          downloadImage(url, 'downloaded_image.jpg');
+        };
+        
+        lightbox.classList.add('active');
+      }
+      
+      // Close Lightbox
+      lightboxClose.onclick = () => {
+        lightbox.classList.remove('active');
+      };
+      
+      lightbox.onclick = (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.remove('active');
+        }
+      };
+
+      // Force Download Image Logic
+      async function downloadImage(imageSrc, name) {
+        try {
+          const image = await fetch(imageSrc);
+          const imageBlog = await image.blob();
+          const imageURL = URL.createObjectURL(imageBlog);
+          
+          const link = document.createElement('a');
+          link.href = imageURL;
+          link.download = name;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } catch (error) {
+          console.error("Download failed:", error);
+          // Fallback simple download link if fetch fails due to CORS
+          const link = document.createElement('a');
+          link.href = imageSrc;
+          link.download = name;
+          link.target = "_blank";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
+
+      // Initialize
+      renderGallery();
+    });
+  </script>
+</body>
+
+</html>
